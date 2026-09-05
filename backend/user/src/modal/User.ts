@@ -23,3 +23,5 @@ const schema: Schema<IUser> = new Schema({
     timestamps: true
 }
 )
+
+export const User = mongoose.model<IUser>('User', schema);
