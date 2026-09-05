@@ -25,12 +25,16 @@ export const startSendOtpConsumer = async()=>{
             if(msg){
                 try{
                     const {to, subject, text} = JSON.parse(msg.content.toString())
+                    const { USER, PASS } = process.env;
+                    if(!USER || !PASS){
+                        throw new Error("Missing mail environment variables (USER/PASS)");
+                    }
                     const transporter = nodemailer.createTransport({
                         host: "smtp.gmail.com",
-                        port: 565,
+                        port: 465,
                         auth:{
-                            user: process.env.USER,
-                            pass: process.env.PASS,
+                            user: USER,
+                            pass: PASS,
                         }
                     })
                 } catch(error){
