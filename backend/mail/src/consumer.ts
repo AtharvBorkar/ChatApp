@@ -17,6 +17,9 @@ export const startSendOtpConsumer = async()=>{
             username: Rabbitmq_Username,
             password: Rabbitmq_Password,
         })
+        const channel = await connection.createChannel()
+        const queueName = "send-otp"
+        await channel.assertQueue(queueName, { durable: true })
     } catch(error){
         console.log("Failed to start rabbitmq consumer", error);
     }
