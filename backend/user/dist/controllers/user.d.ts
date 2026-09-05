@@ -1,2 +1,2 @@
-export declare const loginUser: any;
+export {};
 //# sourceMappingURL=user.d.ts.map

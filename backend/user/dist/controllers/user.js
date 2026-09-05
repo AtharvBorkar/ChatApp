@@ -1,2 +1,2 @@
-export const loginUser = async;
+export {};
 //# sourceMappingURL=user.js.map
