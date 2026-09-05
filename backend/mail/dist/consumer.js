@@ -18,6 +18,17 @@ export const startSendOtpConsumer = async () => {
         const channel = await connection.createChannel();
         const queueName = "send-otp";
         await channel.assertQueue(queueName, { durable: true });
+        console.log("✅ Mail Service consumer starrted, listing for otp emails");
+        channel.consume(queueName, async (msg) => {
+            if (msg) {
+                try {
+                    const { to, subject, text } = JSON.parse(msg.content.toString());
+                    const transporter = nodemailer.createTransport();
+                }
+                catch (error) {
+                }
+            }
+        });
     }
     catch (error) {
         console.log("Failed to start rabbitmq consumer", error);
