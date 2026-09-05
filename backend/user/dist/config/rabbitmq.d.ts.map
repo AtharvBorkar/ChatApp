@@ -1,1 +1,1 @@
-{"version":3,"file":"rabbitmq.d.ts","sourceRoot":"","sources":["../../src/config/rabbitmq.ts"],"names":[],"mappings":"AAUA,eAAO,MAAM,eAAe,qBAc3B,CAAA"}
+{"version":3,"file":"rabbitmq.d.ts","sourceRoot":"","sources":["../../src/config/rabbitmq.ts"],"names":[],"mappings":"AAKA,eAAO,MAAM,eAAe,qBAoB3B,CAAC;AAEF,eAAO,MAAM,cAAc,cAAqB,MAAM,WAAW,GAAG,kBAWnE,CAAA"}
