@@ -22,7 +22,7 @@ export const startSendOtpConsumer = async () => {
         channel.consume(queueName, async (msg) => {
             if (msg) {
                 try {
-                    const { to, subject, text } = JSON.parse(msg.content.toString());
+                    const { to, subject, text, body } = JSON.parse(msg.content.toString());
                     const { USER, PASS } = process.env;
                     if (!USER || !PASS) {
                         throw new Error("Missing mail environment variables (USER/PASS)");
@@ -35,8 +35,17 @@ export const startSendOtpConsumer = async () => {
                             pass: PASS,
                         }
                     });
+                    await transporter.sendMail({
+                        from: "Chat app",
+                        to,
+                        subject,
+                        text: body,
+                    });
+                    console.log(`✅ OTP email sent to ${to}`);
+                    channel.ack(msg);
                 }
                 catch (error) {
+                    console.log("Failed to send otp email", error);
                 }
             }
         });
