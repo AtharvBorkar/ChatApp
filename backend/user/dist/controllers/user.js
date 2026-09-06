@@ -2,6 +2,7 @@ import { publishToQueue } from "../config/rabbitmq.js";
 import TryCatch from "../config/TryCatch.js";
 import { redisClient } from "../index.js";
 import { User } from "../modal/User.js";
+import { generateToken } from "../config/generateToken.js";
 export const loginUser = TryCatch(async (req, res) => {
     const { email } = req.body;
     const rateLimitKey = `otp:ratelimit:${email}`;
@@ -50,6 +51,11 @@ export const verifyUser = TryCatch(async (req, res) => {
         const name = email.slice(0, 8);
         user = await User.create({ name, email });
     }
-    // const token = user.generateToken()
+    const token = generateToken(user);
+    res.json({
+        message: "User verified successfully",
+        user,
+        token,
+    });
 });
 //# sourceMappingURL=user.js.map
