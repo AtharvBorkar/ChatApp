@@ -30,7 +30,7 @@ Promise<void> => {
 
         if (!decodedValue || !decodedValue.id) {
             res.status(401).json({
-                message: "Please Login - Invalid token"
+                message: "Invalid token"
             })
             return
         }
