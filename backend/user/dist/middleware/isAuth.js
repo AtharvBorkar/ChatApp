@@ -21,10 +21,13 @@ export const isAuth = async (req, res, next) => {
             });
             return;
         }
-        req.user = decodedValue;
+        req.user = decodedValue.user;
         next();
     }
     catch (error) {
+        res.status(401).json({
+            message: "Please Login - JWT error"
+        });
     }
 };
 //# sourceMappingURL=isAuth.js.map
