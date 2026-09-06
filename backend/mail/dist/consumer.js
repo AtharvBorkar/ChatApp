@@ -39,7 +39,8 @@ export const startSendOtpConsumer = async () => {
                         from: "Chat app",
                         to,
                         subject,
-                        text: body,
+                        text,
+                        // text: body,
                     });
                     console.log(`✅ OTP email sent to ${to}`);
                     channel.ack(msg);

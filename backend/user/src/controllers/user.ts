@@ -34,3 +34,19 @@ export const loginUser = TryCatch(async(req, res)=>{
         message: "OTP sent successfully"
     })
 })
+
+export const verifyUser = TryCatch(async(req, res)=>{
+    const {email, otp:enteredOtp} = req.body
+
+    // const otpKey = `otp:${email}`
+    // const storedOtp = await redisClient.get(otpKey)
+
+    if(!email || !enteredOtp){
+        res.status(400).json({
+            message:"Email and OTP are required"
+        })
+        return
+    }
+
+    const otpKey = `otp:${email}`
+})
