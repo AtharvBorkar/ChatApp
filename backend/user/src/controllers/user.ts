@@ -11,7 +11,6 @@ export const loginUser = TryCatch(async(req, res)=>{
     if(rateLimit){
         res.status (429).json(
             {message:"Too many requests, please try again later"
-
         })
         return
     }
