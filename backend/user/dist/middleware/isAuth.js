@@ -15,7 +15,7 @@ export const isAuth = async (req, res, next) => {
             return;
         }
         const decodedValue = jwt.verify(token, process.env.JWT_SECRET);
-        if (!decodedValue || !decodedValue.id) {
+        if (!decodedValue || !decodedValue.user) {
             res.status(401).json({
                 message: "Invalid token"
             });

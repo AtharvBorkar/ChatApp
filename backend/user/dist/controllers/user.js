@@ -63,4 +63,21 @@ export const myProfile = TryCatch(async (req, res) => {
     const user = req.user;
     res.json(user);
 });
+export const updateName = TryCatch(async (req, res) => {
+    const user = await User.findById(req.user?._id);
+    if (!user) {
+        res.sendStatus(404).json({
+            message: "Please login",
+        });
+        return;
+    }
+    user.name = req.body.name;
+    await user.save();
+    const token = generateToken(user);
+    res.json({
+        message: "Name updated successfully",
+        user,
+        token,
+    });
+});
 //# sourceMappingURL=user.js.map

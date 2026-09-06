@@ -28,7 +28,7 @@ Promise<void> => {
 
         const decodedValue = jwt.verify(token, process.env.JWT_SECRET as string) as JwtPayload
 
-        if (!decodedValue || !decodedValue.id) {
+        if (!decodedValue || !decodedValue.user) {
             res.status(401).json({
                 message: "Invalid token"
             })
