@@ -21,5 +21,8 @@ export const loginUser = TryCatch(async (req, res) => {
         text: `Your OTP is ${otp}. It will expire in 5 minutes.`,
     };
     await publishToQueue("send-otp", message);
+    res.status(200).json({
+        message: "OTP sent successfully"
+    });
 });
 //# sourceMappingURL=user.js.map
