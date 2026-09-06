@@ -1,0 +1,10 @@
+import type { NextFunction, Request, Response } from "express";
+import type { IUser } from "../modal/User.js";
+
+export interface AuthenticatedRequest extends Request {
+    user?: IUser | null
+}
+
+export const isAuth = (req: AuthenticatedRequest, res: Response, next: NextFunction ) => {
+
+}
