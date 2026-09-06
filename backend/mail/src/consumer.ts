@@ -51,6 +51,6 @@ export const startSendOtpConsumer = async()=>{
             }
         })
     } catch(error){
-        console.log("Failed to start rabbitmq consumer", error);
+        console.log("Failed to start rabbitmq consumerr", error);
     }
 }
