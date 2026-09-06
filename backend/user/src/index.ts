@@ -4,6 +4,7 @@ import connectDb from './config/db.js'
 import { createClient } from 'redis'    
 import userRoutes from './routes/user.js'
 import { connectRabbitMQ } from './config/rabbitmq.js'
+import cors from 'cors'
 
 dotenv.config()
 
