@@ -1,4 +1,4 @@
-const Trycatch = (handler) => {
+const TryCatch = (handler) => {
     return async (req, res, next) => {
         try {
             await handler(req, res, next);
@@ -8,5 +8,5 @@ const Trycatch = (handler) => {
         }
     };
 };
-export default Trycatch;
+export default TryCatch;
 //# sourceMappingURL=TryCatch.js.map
