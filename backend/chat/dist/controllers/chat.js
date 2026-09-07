@@ -77,5 +77,23 @@ export const sendMessage = TryCatch(async (req, res) => {
     const senderId = req.user?._id;
     const { chatId, text } = req.body;
     const imageFile = req.file;
+    if (!senderId) {
+        res.status(400).json({
+            message: "unauthorized"
+        });
+        return;
+    }
+    if (!chatId) {
+        res.status(400).json({
+            message: "Chatid is required"
+        });
+        return;
+    }
+    if (!text && !imageFile) {
+        res.status(400).json({
+            message: "Either text or image is required"
+        });
+        return;
+    }
 });
 //# sourceMappingURL=chat.js.map
