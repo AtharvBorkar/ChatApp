@@ -89,5 +89,5 @@ export const getAllChats = TryCatch(async(req: AuthenticatedRequest, res) => {
 export const sendMessage = TryCatch(async(req: AuthenticatedRequest, res) => {
     const senderId = req.user?._id
     const {chatId, text} = req.body
-    // const imageFile = req.file
+    const imageFile = req.file
 })

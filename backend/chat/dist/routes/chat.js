@@ -1,5 +1,5 @@
 import express from 'express';
-import upload from '../middlewares/multer.js';
+import { upload } from '../middlewares/multer.js';
 import { creatNewChat, getAllChats, sendMessage } from '../controllers/chat.js';
 import { isAuth } from '../middlewares/isAuth.js';
 const router = express.Router();

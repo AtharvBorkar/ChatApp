@@ -76,6 +76,6 @@ export const getAllChats = TryCatch(async (req, res) => {
 export const sendMessage = TryCatch(async (req, res) => {
     const senderId = req.user?._id;
     const { chatId, text } = req.body;
-    // const imageFile = req.file
+    const imageFile = req.file;
 });
 //# sourceMappingURL=chat.js.map
