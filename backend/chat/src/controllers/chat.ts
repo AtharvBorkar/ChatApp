@@ -92,7 +92,7 @@ export const sendMessage = TryCatch(async(req: AuthenticatedRequest, res) => {
     const imageFile = req.file
 
     if(!senderId){
-        res.status(400).json({
+        res.status(401).json({
             message: "unauthorized"
         })
         return
@@ -109,4 +109,50 @@ export const sendMessage = TryCatch(async(req: AuthenticatedRequest, res) => {
         })
         return
     }
+
+    const chat = await Chat.findById(chatId)
+
+    if (!chat){
+        res.status(404).json({
+            message: "Chat not found"
+        })
+        return
+    }
+    const isUserInChat = chat.users.some(
+        (userId) => userId.toString() === senderId.toString()
+    )
+
+    if(!isUserInChat){
+        res.status(403).json({
+            message: "You are not participant of this chat"
+        })
+        return
+    }
+
+    const otherUserId = chat.users.find(
+        (userId) => userId.toString() !== senderId.toString()
+    )
+
+    if(!otherUserId){
+        res.status(401).json({
+            message: "No otherr User"
+        })
+        return
+    }
+
+    //socket setup
+    let messageData: any = {
+        chatId: chatId,
+        sender: senderId,
+        seen: false,
+        seenAt: undefined,
+    }
+
+    if(imageFile){
+        messageData.image = {
+            url: imageFile.path,
+            publicId: imageFile.filename,
+        }
+    }
+
 })
