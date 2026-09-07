@@ -13,7 +13,7 @@ export interface IMessage extends Document {
     createdAt: Date;
     updatedAt: Date;
 }
-export declare const Message: mongoose.Model<IMessage, {}, {}, {}, Document<unknown, {}, IMessage, {}, mongoose.DefaultSchemaOptions> & IMessage & Required<{
+export declare const Messages: mongoose.Model<IMessage, {}, {}, {}, Document<unknown, {}, IMessage, {}, mongoose.DefaultSchemaOptions> & IMessage & Required<{
     _id: Types.ObjectId;
 }> & {
     __v: number;

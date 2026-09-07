@@ -1,6 +1,7 @@
 import TryCatch from "../config/TryCatch.js";
 // import { Chat } from "../models/Chat.js";
 import { Chat } from "../models/chat.js";
+import { Messages } from "../models/Messages.js";
 export const creatNewChat = TryCatch(async (req, res) => {
     const userId = req.user?._id;
     const { otherUserId } = req.body;
@@ -39,6 +40,11 @@ export const getAllChats = TryCatch(async (req, res) => {
     const chats = await Chat.find({ user: userId }).sort({ updatedAt: -1 });
     const chatWithUserData = await Promise.all(chats.map(async (chat) => {
         const otherUserId = chat.users.find(id => id !== userId);
+        const unseenCount = await Messages.countDocuments({
+            chatId: chat._id,
+            sender: { $ne: userId },
+            seen: false
+        });
     }));
 });
 //# sourceMappingURL=chat.js.map
