@@ -8,5 +8,9 @@ export interface IMessage extends Document {
         publicId: string;
     };
     messageType: "text" | "image";
+    seen: boolean;
+    seenAt?: Date;
+    createdAt: Date;
+    updatedAt: Date;
 }
 //# sourceMappingURL=Messages.d.ts.map
