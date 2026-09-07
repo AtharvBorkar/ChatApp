@@ -1,5 +1,6 @@
 import TryCatch from "../config/TryCatch.js";
 import { AuthenticatedRequest } from "../middlewares/isAuth.js";
+// import { Chat } from "../models/Chat.js";
 import { Chat } from "../models/chat.js";
 
 export const creatNewChat = TryCatch(async(req: AuthenticatedRequest, res) => {
