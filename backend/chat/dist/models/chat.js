@@ -1,4 +1,4 @@
-import mongooge, { Document, Schema } from 'mongoose';
+import mongooge, { Schema } from 'mongoose';
 const schema = new Schema({
     users: [{ type: String, required: true }],
     latestMessage: {
