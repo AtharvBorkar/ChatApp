@@ -1,3 +1,4 @@
+import axios from "axios";
 import TryCatch from "../config/TryCatch.js";
 // import { Chat } from "../models/Chat.js";
 import { Chat } from "../models/chat.js";
@@ -45,6 +46,31 @@ export const getAllChats = TryCatch(async (req, res) => {
             sender: { $ne: userId },
             seen: false
         });
+        try {
+            const { data } = await axios.get(`${process.env.USER_SERVICE}/api/v1/user/${otherUserId}`);
+            return {
+                user: data,
+                chat: {
+                    ...chat.toObject(),
+                    latestMessage: chat.latestMessage || null,
+                    unseenCount,
+                }
+            };
+        }
+        catch (error) {
+            console.error(`Error fetching user data for userId: ${otherUserId}`, error);
+            return {
+                user: { _id: otherUserId, name: "Unknown User" },
+                chat: {
+                    ...chat.toObject(),
+                    latestMessage: chat.latestMessage || null,
+                    unseenCount,
+                }
+            };
+        }
     }));
+    res.json({
+        chats: chatWithUserData,
+    });
 });
 //# sourceMappingURL=chat.js.map
