@@ -16,7 +16,7 @@ export interface IMessage extends Document{
     updatedAt: Date
 }
 
-const schem = new Schema<IMessage>({
+const schema = new Schema<IMessage>({
     chatId: {
         type: Schema.Types.ObjectId,
         ref: "Chat",
@@ -43,5 +43,10 @@ const schem = new Schema<IMessage>({
     seenAt:{
         type: Date,
         default: null
-    }
+    },
+},
+{
+    timestamps: true,
 })
+
+export const Message = mongoose.model<IMessage>("Messages", schema)

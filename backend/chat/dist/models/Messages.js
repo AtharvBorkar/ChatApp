@@ -1,5 +1,5 @@
-import { Schema } from 'mongoose';
-const schem = new Schema({
+import mongoose, { Schema } from 'mongoose';
+const schema = new Schema({
     chatId: {
         type: Schema.Types.ObjectId,
         ref: "Chat",
@@ -26,6 +26,9 @@ const schem = new Schema({
     seenAt: {
         type: Date,
         default: null
-    }
+    },
+}, {
+    timestamps: true,
 });
+export const Message = mongoose.model("Messages", schema);
 //# sourceMappingURL=Messages.js.map
