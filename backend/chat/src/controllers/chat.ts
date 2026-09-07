@@ -153,6 +153,27 @@ export const sendMessage = TryCatch(async(req: AuthenticatedRequest, res) => {
             url: imageFile.path,
             publicId: imageFile.filename,
         }
+        messageData.messageType = "image"
+        messageData.text = text || ""
+    }else{
+        messageData.text = text
+        messageData.messageType = "text"
     }
 
+    const message = new Messages(messageData)
+    const savedMessage = await message.save()
+
+    const latestMessageText = imageFile? "📷 Image": text
+
+    await Chat.findByIdAndUpdate(chatId, {
+        latestMessage: {
+            text: latestMessageText,
+            sender: senderId
+        },
+        updatedAt: new Date()
+    },
+    {new: true}
+)
+
+//emit to sockets
 })
