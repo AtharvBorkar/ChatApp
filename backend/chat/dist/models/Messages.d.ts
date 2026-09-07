@@ -7,5 +7,6 @@ export interface IMessage extends Document {
         url: string;
         publicId: string;
     };
+    messageType: "text" | "image";
 }
 //# sourceMappingURL=Messages.d.ts.map

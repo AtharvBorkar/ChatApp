@@ -10,4 +10,5 @@ export interface IMessage extends Document{
         url: string
         publicId: string
     }
+    messageType: "text" | "image"
 }
