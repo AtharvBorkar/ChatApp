@@ -15,4 +15,4 @@ export declare const Chat: mongooge.Model<IChat, {}, {}, {}, Document<unknown, {
 } & {
     id: string;
 }, any, IChat>;
-//# sourceMappingURL=Chat.d.ts.map
+//# sourceMappingURL=chat.d.ts.map
