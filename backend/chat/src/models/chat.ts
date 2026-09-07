@@ -23,3 +23,4 @@ const schema: Schema<IChat> = new Schema(
     }
 )
 
+export const Chat = mongooge.model<IChat>('Chat', schema)

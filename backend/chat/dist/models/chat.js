@@ -8,4 +8,5 @@ const schema = new Schema({
 }, {
     timestamps: true,
 });
+export const Chat = mongooge.model('Chat', schema);
 //# sourceMappingURL=chat.js.map
