@@ -1,4 +1,4 @@
-import { Request, NextFunction } from "express";
+import { Request, NextFunction, Response } from "express";
 interface IUser extends Document {
     _id: string;
     name: string;
@@ -8,5 +8,5 @@ export interface AuthenticatedRequest extends Request {
     user?: IUser | null;
 }
 export declare const isAuth: (req: AuthenticatedRequest, res: Response, next: NextFunction) => Promise<void>;
-export {};
+export default isAuth;
 //# sourceMappingURL=isAuth.d.ts.map
