@@ -46,7 +46,7 @@ export const getAllChats = TryCatch(async(req: AuthenticatedRequest, res) => {
         })
         return
     }
-    const chats = await Chat.find({user: userId}).sort({updatedAt: -1})
+    const chats = await Chat.find({users: userId}).sort({updatedAt: -1})
 
     const chatWithUserData = await Promise.all(
         chats.map(async(chat) => {
