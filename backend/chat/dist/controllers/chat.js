@@ -166,5 +166,33 @@ export const getMessagesByChat = TryCatch(async (req, res) => {
         });
         return;
     }
+    const chat = await Chat.findById(chatId);
+    if (!chat) {
+        res.status(404).json({
+            message: "Chat not found"
+        });
+        return;
+    }
+    const isUserInChat = chat.users.some((userId) => userId.toString() === userId.toString());
+    if (!isUserInChat) {
+        res.status(403).json({
+            message: "You are not participant of this chat"
+        });
+        return;
+    }
+    const messagesToMarkSeen = await Message.find({
+        chatId: chatId,
+        sender: { $ne: userId },
+        seen: false
+    });
+    await Messages.updateMany({
+        chatId: chatId,
+        sender: { $ne: userId },
+        seen: false
+    }, {
+        seen: true,
+        seenAt: new Date(),
+    });
+    const messages = await Messages.find({ chatId }).sort({ createdAt: 1 });
 });
 //# sourceMappingURL=chat.js.map
