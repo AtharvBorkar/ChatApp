@@ -14,13 +14,14 @@ const LoginPage = () => {
         setLoading(true)
 
         try{
-            const {data} = await axios.post('http://localhost:5000/api/users/login', {
+            const {data} = await axios.post('http://localhost:5000/api/v1/login', {
                 email,
             })
+            console.log(data)
             alert(data.message)
-            router.push('/verify?email=${email}')
+            router.push(`/verify?email=${encodeURIComponent(email)}`)
         }catch(error: any){
-            alert(error.response.data.message)
+            alert(error?.response?.data?.message || error.message || "Failed to send OTP")
         }finally{
             setLoading(false)
         }
@@ -41,7 +42,7 @@ const LoginPage = () => {
                     </p>
                 </div>
 
-                <form className="space-y-6">
+                <form onSubmit={handleSubmit} className="space-y-6">
                 <div>
                     <label htmlFor="email" className="block text-sm font-medium text-gray-300 mb-2">Email Adress</label>
                     <input type="email" id="email" name="email" className="w-full px-4 py-2 rounded-lg bg-gray-700 border border-gray-600 text-white focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Enter your email" value={email} onChange={(e) => setEmail(e.target.value)} required/>
