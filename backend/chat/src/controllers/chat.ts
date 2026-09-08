@@ -171,9 +171,15 @@ export const sendMessage = TryCatch(async(req: AuthenticatedRequest, res) => {
             sender: senderId
         },
         updatedAt: new Date()
-    },
-    {new: true}
-)
+    },{new: true})
 
-//emit to sockets
+    //emit socket
+
+    res.status(201).json({
+        message: savedMessage,
+        sender: senderId,
+    })
+    
+
+
 })

@@ -145,6 +145,10 @@ export const sendMessage = TryCatch(async (req, res) => {
         },
         updatedAt: new Date()
     }, { new: true });
-    //emit to sockets
+    //emit socket
+    res.status(201).json({
+        message: savedMessage,
+        sender: senderId,
+    });
 });
 //# sourceMappingURL=chat.js.map
