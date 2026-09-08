@@ -180,6 +180,12 @@ export const sendMessage = TryCatch(async(req: AuthenticatedRequest, res) => {
         sender: senderId,
     })
     
-
-
 })
+
+export const getMessagesByChat = TryCatch(
+    async(req: AuthenticatedRequest, res) => {
+        const userId = req.user?._id
+        const { chatId } = req.body  
+    }
+)
+    

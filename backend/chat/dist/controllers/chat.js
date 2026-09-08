@@ -151,4 +151,8 @@ export const sendMessage = TryCatch(async (req, res) => {
         sender: senderId,
     });
 });
+export const getMessagesByChat = TryCatch(async (req, res) => {
+    const userId = req.user?._id;
+    const { chatId } = req.body;
+});
 //# sourceMappingURL=chat.js.map
