@@ -1,19 +1,40 @@
 "use client"
 import { ArrowRight, Loader2, Lock } from 'lucide-react'
 import { useRouter, useSearchParams } from 'next/navigation'
-import React, { useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 
 const VerifyPage = () => {
     const [loading, setLoading] = useState<boolean>(false)
     const [otp, setOtp] = useState<string[]>(["", "", "", "", "", ""])
-    const error = useState<string>("")
+    const [error, setError] = useState<string>("")
     const [resendLoading, setResendLoading] = useState<boolean>(false)
     const [timer, setTimer] = useState<number>(60)
-    const inputRefs = useRef<Array<HTMLInputElement>|null>([])
+    const inputRefs = useRef<Array<HTMLInputElement>>([])
     const router = useRouter()
 
     const searchParams = useSearchParams()
     const email: string = searchParams.get('email') || ''
+    useEffect(() => {
+        if(timer > 0){
+            const interval = setInterval(() => {
+                setTimer(prevTimer => prevTimer - 1)
+            }, 1000)
+            return () => clearInterval(interval)
+        }
+    }, [timer])
+
+    const handleInputChange = (index: number, value: string): void => {
+        if(value.length>1) return
+        const newOtp = [...otp]
+        newOtp[index] = value
+        setOtp(newOtp)
+        setError("")
+
+        if(value && index < 5){
+            inputRefs.current[index + 1]?.focus()
+        }
+    }
+
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>): Promise<void> => {
 
     }
