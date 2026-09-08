@@ -186,6 +186,19 @@ export const getMessagesByChat = TryCatch(
     async(req: AuthenticatedRequest, res) => {
         const userId = req.user?._id
         const { chatId } = req.body  
+
+        if(!userId){
+            res.status(401).json({
+                message: "Unautharized"
+            })
+        return
+        }
+        if(!chatId){
+            res.status(400).json({
+                message: "chatId is required"
+            })
+            return
+        }
     }
 )
     
