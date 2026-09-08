@@ -18,7 +18,15 @@ const LoginPage = () => {
                     </p>
                 </div>
 
-                <form className=""></form>
+                <form className="space-y-6">
+                <div>
+                    <label htmlFor="email" className="block text-sm font-medium text-gray-300 mb-2">Email Adress</label>
+                    <input type="email" id="email" name="email" className="w-full px-4 py-2 rounded-lg bg-gray-700 border border-gray-600 text-white focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Enter your email" required />
+                </div>
+                <button type="submit" className="w-full py-2 px-4 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed">
+                    Continue
+                </button>
+                </form>
             </div>
         </div>
     </div>
