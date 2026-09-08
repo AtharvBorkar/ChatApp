@@ -180,7 +180,7 @@ export const getMessagesByChat = TryCatch(async (req, res) => {
         });
         return;
     }
-    const messagesToMarkSeen = await Message.find({
+    const messagesToMarkSeen = await Messages.find({
         chatId: chatId,
         sender: { $ne: userId },
         seen: false
@@ -194,5 +194,27 @@ export const getMessagesByChat = TryCatch(async (req, res) => {
         seenAt: new Date(),
     });
     const messages = await Messages.find({ chatId }).sort({ createdAt: 1 });
+    const otherUserId = chat.users.find((id) => id !== userId);
+    try {
+        const { data } = await axios.get(`${process.env.USER_SERVICE}/api/v1/user/${otherUserId}`);
+        if (!otherUserId) {
+            res.status(400).json({
+                message: "No other user"
+            });
+            return;
+        }
+        //socket Work
+        res.json({
+            messages,
+            user: data,
+        });
+    }
+    catch (error) {
+        console.error(error);
+        res.json({
+            messages,
+            user: { _id: otherUserId, name: "Unknown User" },
+        });
+    }
 });
 //# sourceMappingURL=chat.js.map
