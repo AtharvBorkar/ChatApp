@@ -9,7 +9,7 @@ const VerifyPage = () => {
     const [error, setError] = useState<string>("")
     const [resendLoading, setResendLoading] = useState<boolean>(false)
     const [timer, setTimer] = useState<number>(60)
-    const inputRefs = useRef<Array<HTMLInputElement>>([])
+    const inputRefs = useRef<Array<HTMLInputElement | null>>([])
     const router = useRouter()
 
     const searchParams = useSearchParams()
@@ -32,6 +32,23 @@ const VerifyPage = () => {
 
         if(value && index < 5){
             inputRefs.current[index + 1]?.focus()
+        }
+    }
+
+    const handlePaste = (e: React.ClipboardEvent<HTMLInputElement>): void => {
+        e.preventDefault()
+        const pastedData = e.clipboardData.getData('text')
+        const digits = pastedData.replace(/\D/g, '').slice(0, 6)
+        if(digits.length === 6){
+            const newOtp = digits.split('')
+            setOtp(newOtp)
+            inputRefs.current[5]?.focus() 
+        }
+    }
+
+    const handleKeyDown = (index:number,e: React.KeyboardEvent<HTMLInputElement>): void => {
+        if (e.key === "Backspace" && !otp[index] && index > 0) {
+            inputRefs.current[index - 1]?.focus()
         }
     }
 
@@ -59,8 +76,25 @@ const VerifyPage = () => {
 
                 <form onSubmit={handleSubmit} className="space-y-6">
                 <div>
-                    <label htmlFor="email" className="block text-sm font-medium text-gray-300 mb-2">Email Adress</label>
-                    <input type="email" id="email" name="email" className="w-full px-4 py-2 rounded-lg bg-gray-700 border border-gray-600 text-white focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Enter your email" /*value={email} onChange={(e) => setEmail(e.target.value)}*/ required/>
+                    <label htmlFor="email" className="block text-sm font-medium text-gray-300 mb-4 text-center">Enter your 6 digit otp here</label>
+                    <div className="flex justify-center in-checked: space-x-3">
+                        {
+                            otp.map((digit, index) => (
+                                <input key={index} ref={(el: HTMLInputElement | null)=>{
+                                    inputRefs.current[index] = el /*as HTMLInputElement*/
+                                }}
+                                type="text"
+                                maxLength={1}
+                                value={digit}
+                                onChange={e=> handleInputChange(index, e.target.value)}
+                                onKeyDown={e=> handleKeyDown(index,e)}
+                                onPaste={index===0? handlePaste: undefined}
+                                className="w-12 h-12 text-center text-xl border-2border-gray-600 rounded-lg bg-gray-700 text-white"
+                                />
+                            ))
+                        }
+                    </div>
+                    {/* <input type="email" id="email" name="email" className="w-full px-4 py-2 rounded-lg bg-gray-700 border border-gray-600 text-white focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Enter your email" /*value={email} onChange={(e) => setEmail(e.target.value)} required/> */}
                 </div>
                 <button type="submit" className="w-full py-2 px-4 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed" disabled={loading}>
                     {
