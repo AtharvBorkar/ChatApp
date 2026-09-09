@@ -1,6 +1,8 @@
 "use client"
 
-import { createContext, ReactNode, useContext, useState } from "react"
+import { createContext, ReactNode, useContext, useEffect, useState } from "react"
+import Cookies from "js-cookie"
+import axios from "axios"
 
 // import { User } from "lucide-react"
 
@@ -54,12 +56,25 @@ export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
 
     async function fetchUser() {
         try{
+            const token = Cookies.get("token")
 
+            const { data } = await axios.get(`${user_service}/api/v1/me`, {
+                headers : {
+                    Authorization: `Bearer ${token}`
+                }
+            })
+            setUser(data)
+            setIsAuth(true)
+            setLoading(false)
         }catch(error){
             console.log("Error fetching user:", error)
             setLoading(false)
         }
     }
+
+    useEffect(() => {
+        fetchUser()
+    }, [])
 
     return <AppContext.Provider value={{user, setUser, isAuth, setIsAuth, loading}}>
         {children}
