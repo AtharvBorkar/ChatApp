@@ -1,6 +1,6 @@
 "use client"
 import axios from 'axios'
-import { ArrowRight, Loader2, Lock } from 'lucide-react'
+import { ArrowRight, ChevronLeft, Loader2, Lock } from 'lucide-react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import React, { useEffect, useRef, useState } from 'react'
 import Cookies from 'js-cookie'
@@ -92,15 +92,22 @@ const VerifyPage = () => {
             const {data} = await axios.post('http://localhost:5000/api/v1/login',{
                 email,
             })
+            alert(data.message)
+            setTimer(60)
         }catch(error:any){
-
+            setError(error.response.data.message)
+        }finally{
+            setResendLoading(false)
         }
     }
   return (
     <div className="min-h-screen bg-gray-900 flex items-center justify-center">
         <div className="max-w-md w-full">
             <div className="bg-grey-800 border border-gray-700 rounded-lg p-8">
-                <div className="text-center mb-8">
+                <div className="text-center mb-8 relative">
+                    <button className="absolute top-0 left-0 p-2 text-gray-300 hover:text-white" onClick={() => router.push("/login")}>
+                        <ChevronLeft className="w-6 h-6" />
+                    </button>
                     <div className="mx-auto w-20 h-20 bg-blue-600 rounded-lg flex items-center justify-center mb-6">
                         <Lock size={40} className="text-white" />
                     </div>
@@ -168,7 +175,7 @@ const VerifyPage = () => {
                     {timer > 0 ? ( 
                         <p className="text-gray-400 text-sm">Resend code in {timer} seconds </p> 
                     ):(
-                        <button className="text-blue-400 hover:text-blue-300 font-medium text-sm disabled:opacity-50" disabled={resendLoading} >
+                        <button className="text-blue-400 hover:text-blue-300 font-medium text-sm disabled:opacity-50" disabled={resendLoading} onClick={handleResendCode}>
                             {resendLoading? "Sending..." : "ResendCode"}
                         </button>
                     )}
