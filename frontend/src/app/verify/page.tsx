@@ -96,6 +96,11 @@ const VerifyPage = () => {
                     </div>
                     {/* <input type="email" id="email" name="email" className="w-full px-4 py-2 rounded-lg bg-gray-700 border border-gray-600 text-white focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Enter your email" /*value={email} onChange={(e) => setEmail(e.target.value)} required/> */}
                 </div>
+                {
+                    error && <div className="bg-red-900 border-red-700 rounded-lg p-3">
+                        <p className="text-red-300 text-sm text-center">{error}</p>
+                    </div>
+                }
                 <button type="submit" className="w-full py-2 px-4 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed" disabled={loading}>
                     {
                         loading? (
@@ -113,6 +118,20 @@ const VerifyPage = () => {
                     
                 </button>
                 </form>
+
+
+                <div className="mt-6 text-center">
+                    <p className="text-gray-400 text-sm">
+                        Didn't receive the code?
+                    </p>
+                    {timer > 0 ? ( 
+                        <p className="text-gray-400 text-sm">Resend code in {timer} seconds </p> 
+                    ):(
+                        <button className="text-blue-400 hover:text-blue-300 font-medium text-sm disabled:opacity-50" disabled={resendLoading} >
+                            {resendLoading? "Sending..." : "ResendCode"}
+                        </button>
+                    )}
+                </div>
             </div>
         </div>
     </div>
