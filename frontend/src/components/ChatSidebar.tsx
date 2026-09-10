@@ -1,6 +1,6 @@
 import { User } from '@/context/AppContext'
 import React, { useState } from 'react'
-import { X, MessageCircle, Plus, Search } from 'lucide-react'
+import { X, MessageCircle, Plus, Search, UserCircle } from 'lucide-react'
 interface ChatSidebarProps {
     sidebarOpen: boolean
     setSidebarOpen: (open: boolean) => void
@@ -59,8 +59,19 @@ const ChatSidebar = ({sidebarOpen, setSidebarOpen, showAllUsers, setShowAllUsers
                     <div className="space-y-2 overflow-y-auto h-full pb-4">
                         {
                             users?.filter((u)=> u._id !== loggedInUser?._id && u.name.toLowerCase().includes(searchQuery.toLocalLowerCase())).map((u)=>(
-                                <button>
-                                    
+                                <button key={u._id} className="w-full text-left p-4 rounded-lg border-gray-700 hover:border-gray-600 hover:bg-gray-800 transition-colors">
+                                    <div className="flex items-center gap-3">
+                                        <div className="relative">
+                                            <UserCircle className="w-6 h-6 text-gray-300" />
+                                        </div>
+                                        {/* online Symboll dikhan hain*/}
+                                    </div>
+                                    <div className="flex-1 min-w-0">
+                                        <span className="font-medium text-white">{u.name}</span>
+                                        <div className="text-xs text-gray-400 mt-0.5">
+                                            {/* to show online offilne text */}
+                                        </div>
+                                    </div>
                                 </button>
                             ))
                         }
