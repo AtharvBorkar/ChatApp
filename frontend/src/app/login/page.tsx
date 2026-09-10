@@ -1,14 +1,17 @@
 "use client"
 import React, { useState } from 'react'
 import { ArrowBigRight, ArrowRight, Loader2, Mail } from 'lucide-react'
-import { useRouter } from 'next/navigation'
+import { redirect, useRouter } from 'next/navigation'
 import axios from 'axios'
-import { user_service } from '@/context/AppContext'
+import { user_service, useAppData } from '@/context/AppContext'
+import Loading from '@/components/Loading'
 
 const LoginPage = () => {
     const [email, setEmail] = useState<string>('')
     const [loading, setLoading] = useState<boolean>(false)
     const router = useRouter()
+
+    const {isAuth, loading: userLoading} = useAppData()
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>): Promise<void> => {
         e.preventDefault()
@@ -27,6 +30,9 @@ const LoginPage = () => {
             setLoading(false)
         }
     }
+
+    if (userLoading) return <Loading />
+    if (isAuth) return redirect("/chat")
   return (
     <div className="min-h-screen bg-gray-900 flex items-center justify-center">
         <div className="max-w-md w-full">

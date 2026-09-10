@@ -5,9 +5,10 @@ import { useRouter, useSearchParams, redirect } from 'next/navigation'
 import React, { useEffect, useRef, useState } from 'react'
 import Cookies from 'js-cookie'
 import { useAppData, user_service } from '@/context/AppContext'
+import Loading from './Loading'
 
 const VerifyOtp = () => {
-    const { isAuth, setIsAuth, setUser } = useAppData()
+    const { isAuth, setIsAuth, setUser, loading: userLoading} = useAppData()
     const [loading, setLoading] = useState<boolean>(false)
     const [otp, setOtp] = useState<string[]>(["", "", "", "", "", ""])
     const [error, setError] = useState<string>("")
@@ -79,6 +80,8 @@ const VerifyOtp = () => {
             })
             setOtp(["", "", "", "", "", ""])
             inputRefs.current[0]?.focus()
+            setUser(data.user)
+            setIsAuth(true)
             // router.push('/')
         }catch(error:any){
             setError(error.response.data.message)
@@ -102,6 +105,8 @@ const VerifyOtp = () => {
             setResendLoading(false)
         }
     }
+    if(userLoading) return <Loading />
+
     if (isAuth) redirect("/chat")
   return (
     <div className="min-h-screen bg-gray-900 flex items-center justify-center">
