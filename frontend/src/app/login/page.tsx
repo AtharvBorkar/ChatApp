@@ -5,6 +5,8 @@ import { redirect, useRouter } from 'next/navigation'
 import axios from 'axios'
 import { user_service, useAppData } from '@/context/AppContext'
 import Loading from '@/components/Loading'
+//import { toast } from 'react-hot-toast/headless'
+import { toast } from 'react-hot-toast'
 
 const LoginPage = () => {
     const [email, setEmail] = useState<string>('')
@@ -22,10 +24,10 @@ const LoginPage = () => {
                 email,
             })
             console.log(data)
-            alert(data.message)
+            toast.success(data.message)
             router.push(`/verify?email=${encodeURIComponent(email)}`)
         }catch(error: any){
-            alert(error?.response?.data?.message || error.message || "Failed to send OTP")
+            toast.error(error?.response?.data?.message || error.message || "Failed to send OTP")
         }finally{
             setLoading(false)
         }
