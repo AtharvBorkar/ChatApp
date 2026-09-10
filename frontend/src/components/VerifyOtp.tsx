@@ -83,6 +83,8 @@ const VerifyOtp = () => {
             inputRefs.current[0]?.focus()
             setUser(data.user)
             setIsAuth(true)
+            fetchChats()
+            fetchUsers()
             // router.push('/')
         }catch(error:any){
             setError(error.response.data.message)
