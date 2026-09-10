@@ -3,6 +3,7 @@
 import { createContext, ReactNode, useContext, useEffect, useState } from "react"
 import Cookies from "js-cookie"
 import axios from "axios"
+import { Toaster } from 'react-hot-toast'
 
 // import { User } from "lucide-react"
 
@@ -78,6 +79,7 @@ export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
 
     return <AppContext.Provider value={{user, setUser, isAuth, setIsAuth, loading}}>
         {children}
+        <Toaster />
     </AppContext.Provider>
 }
 export const useAppData = (): AppContextType => {

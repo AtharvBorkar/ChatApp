@@ -1,4 +1,5 @@
 "use client"
+import Loading from '@/components/Loading'
 import { useAppData } from '@/context/AppContext'
 import { useRouter } from 'next/navigation'
 import React, { useEffect } from 'react'
@@ -12,10 +13,10 @@ const ChatApp = () => {
     if(!isAuth && !loading){
       router.push('/login')
     }
-  })
-  return (
-    <div>ChatApp</div>
-  )
+  },[isAuth, loading])
+  
+  if(loading) return <Loading />
+  return <div>ChatApp</div>
 }
 
 export default ChatApp
