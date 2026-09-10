@@ -1,6 +1,6 @@
 import { User } from '@/context/AppContext'
 import React, { useState } from 'react'
-import { X, MessageCircle, Plus } from 'lucide-react'
+import { X, MessageCircle, Plus, Search } from 'lucide-react'
 interface ChatSidebarProps {
     sidebarOpen: boolean
     setSidebarOpen: (open: boolean) => void
@@ -36,12 +36,25 @@ const ChatSidebar = ({sidebarOpen, setSidebarOpen, showAllUsers, setShowAllUsers
                     </h2>
                 </div>
 
-                <button className={`p-2.5 rounded-lg transition-colors ${showAllUsers ? "bg-red-600 hover:bg-red-700 text-white" : "bg-green-600 hover:bg-gray-700 text-white"}`}
+                <button className={`p-2.5 rounded-lg transition-colors ${showAllUsers ? "bg-red-600 hover:bg-red-700 text-white" : "bg-green-600 hover:bg-green-700 text-white"}`}
                 onClick={()=> setShowAllUsers((prev)=> !prev)}
                 >
                     {showAllUsers ? ( <X className="w-4 h-4" /> ) : ( <Plus className="w-4 h-4" /> )}
                 </button>
             </div>
+        </div>
+
+        {/*content*/}
+        <div className="flex-1 overflow-hdden px-4 py-2">
+            {
+                showAllUsers? <div className="space-y-4 h-full">
+                    <div className="relative">
+                        <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
+                        <input type="text" placeholder="Search Usres..." className="w-full pl-10 pr-4 py-3 bg-gray-800 border-fray-700 text-white placeholder-gray-400" />
+                    </div>
+                </div>
+            :  <div></div>
+            }
         </div>
     </aside>
   )
