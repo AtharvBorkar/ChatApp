@@ -1,6 +1,6 @@
 "use client"
 import Loading from '@/components/Loading'
-import { useAppData } from '@/context/AppContext'
+import { useAppData, User } from '@/context/AppContext'
 import { useRouter } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
 
@@ -22,7 +22,12 @@ const ChatApp = () => {
   const {loading, isAuth, logoutUser, chats, user: loggedInUser, users, fetchChats} = useAppData()
 
   const [selectedUser, setSelectedUser] = useState<string | null>(null)
-  const [messages, setMessages] = useState<Message[]>([])
+  const [messages, setMessages] = useState("")
+  const [siderbarOpen, setSidebarOpen] = useState(false)
+  const [user, setUser] = useState<User | null>(null)
+  const [showAllUsers, setShowAllUsers] = useState(false)
+  const [isTyping, setIsTyping] = useState(false)
+  const [typingTimeout, setTypingTimeout] = useState<NodeJS.Timeout | null>(null)
 
   const router = useRouter()
 
@@ -33,7 +38,11 @@ const ChatApp = () => {
   },[isAuth, loading])
   
   if(loading) return <Loading />
-  return <div>ChatApp</div>
+  return (
+    <div className="min-h-screen flex bg-gray-900 text-white relative overflow-hidden">
+      ChatSidebar
+    </div>
+  )
 }
 
 export default ChatApp
