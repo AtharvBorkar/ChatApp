@@ -1,7 +1,6 @@
 import { User } from '@/context/AppContext'
 import React, { useState } from 'react'
-
-import { X } from 'lucide-react'
+import { X, MessageCircle } from 'lucide-react'
 interface ChatSidebarProps {
     sidebarOpen: boolean
     setSidebarOpen: (open: boolean) => void
@@ -28,7 +27,11 @@ const ChatSidebar = ({sidebarOpen, setSidebarOpen, showAllUsers, setShowAllUsers
             </div>
 
             <div className="flex items-center justify-between mb-6">
-
+                <div className="flex items-center gap-3">
+                    <div className="p-2 bg-blue-500 justify-between">
+                        <MessageCircle className="w-5 h-5 text-white" />
+                    </div>
+                </div>
             </div>
         </div>
     </aside>
