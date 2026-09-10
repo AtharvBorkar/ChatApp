@@ -50,7 +50,20 @@ const ChatSidebar = ({sidebarOpen, setSidebarOpen, showAllUsers, setShowAllUsers
                 showAllUsers? <div className="space-y-4 h-full">
                     <div className="relative">
                         <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
-                        <input type="text" placeholder="Search Usres..." className="w-full pl-10 pr-4 py-3 bg-gray-800 border-fray-700 text-white placeholder-gray-400" />
+                        <input type="text" placeholder="Search Usres..." className="w-full pl-10 pr-4 py-3 bg-gray-800 border-fray-700 text-white placeholder-gray-400"
+                            value={searchQuery} 
+                            onChange={e=> setSearchQuery(e.target.value)} />
+                    </div>
+
+                    {/*user list*/}
+                    <div className="space-y-2 overflow-y-auto h-full pb-4">
+                        {
+                            users?.filter((u)=> u._id !== loggedInUser?._id && u.name.toLowerCase().includes(searchQuery.toLocalLowerCase())).map((u)=>(
+                                <button>
+                                    
+                                </button>
+                            ))
+                        }
                     </div>
                 </div>
             :  <div></div>
