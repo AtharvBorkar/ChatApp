@@ -1,6 +1,6 @@
 import { User } from '@/context/AppContext'
 import React, { useState } from 'react'
-import { X, MessageCircle } from 'lucide-react'
+import { X, MessageCircle, Plus } from 'lucide-react'
 interface ChatSidebarProps {
     sidebarOpen: boolean
     setSidebarOpen: (open: boolean) => void
@@ -39,7 +39,7 @@ const ChatSidebar = ({sidebarOpen, setSidebarOpen, showAllUsers, setShowAllUsers
                 <button className={`p-2.5 rounded-lg transition-colors ${showAllUsers ? "bg-red-600 hover:bg-red-700 text-white" : "bg-green-600 hover:bg-gray-700 text-white"}`}
                 onClick={()=> setShowAllUsers((prev)=> !prev)}
                 >
-                    showAllUsers ? <X className="w-4 h-4"
+                    {showAllUsers ? ( <X className="w-4 h-4" /> ) : ( <Plus className="w-4 h-4" /> )}
                 </button>
             </div>
         </div>
