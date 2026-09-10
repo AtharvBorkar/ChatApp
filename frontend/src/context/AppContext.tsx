@@ -3,7 +3,7 @@
 import { createContext, ReactNode, useContext, useEffect, useState } from "react"
 import Cookies from "js-cookie"
 import axios from "axios"
-import { Toaster } from 'react-hot-toast'
+import toast, { Toaster } from 'react-hot-toast'
 
 // import { User } from "lucide-react"
 
@@ -73,8 +73,31 @@ export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
         }
     }
 
+    async function logoutUser() {
+        Cookies.remove("token")
+        setUser(null)
+        setIsAuth(false)
+        toast.success("Logged out successfully")
+    }
+
+    const [chats, setChats] = useState<Chat[] | null>(null)
+    async function fetchChats() {
+        const token = Cookies.get("token")
+        try{
+            const {data} = await axios.get(`${chat_service}/api/v1/chats/all`, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            })
+            setChats(data.chats)
+        }catch(error){
+
+        }
+    }
+
     useEffect(() => {
         fetchUser()
+        fetchChats()
     }, [])
 
     return <AppContext.Provider value={{user, setUser, isAuth, setIsAuth, loading}}>
