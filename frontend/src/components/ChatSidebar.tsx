@@ -16,6 +16,7 @@ interface ChatSidebarProps {
 
 const ChatSidebar = ({sidebarOpen, setSidebarOpen, showAllUsers, setShowAllUsers, users, loggedInUser, chats, selectedUser, handleLogout}:ChatSidebarProps) => {
     const [ searchQuery, setSearchQuery] = useState("")
+    console.log(users)
   return (
     <aside className={`fixed z-20 sm:static top-0 left-0 h-screen w-80 bg-gray-900 border-r boredr-gray-700 transform ${sidebarOpen ? "translate-x-0" : "-translate-x-full"} sm:translate-x-0 transition-transform duration-300 flex flex-col`}>
         {/*header*/}
@@ -58,7 +59,7 @@ const ChatSidebar = ({sidebarOpen, setSidebarOpen, showAllUsers, setShowAllUsers
                     {/*user list*/}
                     <div className="space-y-2 overflow-y-auto h-full pb-4">
                         {
-                            users?.filter((u)=> u._id !== loggedInUser?._id && u.name.toLowerCase().includes(searchQuery.toLocalLowerCase())).map((u)=>(
+                            users?.filter((u)=> u._id !== loggedInUser?._id && u.name.toLowerCase().includes(searchQuery.toLocaleLowerCase())).map((u)=>(
                                 <button key={u._id} className="w-full text-left p-4 rounded-lg border-gray-700 hover:border-gray-600 hover:bg-gray-800 transition-colors">
                                     <div className="flex items-center gap-3">
                                         <div className="relative">
@@ -77,7 +78,11 @@ const ChatSidebar = ({sidebarOpen, setSidebarOpen, showAllUsers, setShowAllUsers
                         }
                     </div>
                 </div>
-            :  <div></div>
+            :  chats && chats.length >0 ? (
+                <div className=""></div>
+            ) : (
+                <div></div>
+            )
             }
         </div>
     </aside>
