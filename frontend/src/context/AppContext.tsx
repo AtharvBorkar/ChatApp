@@ -97,7 +97,7 @@ export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
             })
             setChats(data.chats)
         }catch(error){
-
+            console.log("Error fetching chats:", error)
         }
     }
 
@@ -110,9 +110,9 @@ export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
                     Authorization: `Bearer ${token}`
                 }
             })
-            setUsers(data.users)
+            setUsers(data)
         }catch(error){
-
+            console.log("Error fetching users:", error)
         }
     }
 
