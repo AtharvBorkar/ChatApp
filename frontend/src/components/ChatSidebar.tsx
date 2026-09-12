@@ -124,7 +124,12 @@ const ChatSidebar = ({sidebarOpen, setSidebarOpen, showAllUsers, setShowAllUsers
                                             {
                                                 latestMessage && (
                                                     <div className="flex items-center gap-2">
-                                                        {isSentByMe ? <CornerUpLeft size={14} className={"text-blue-400 text-shrrink-0"}/> : <CornerDownRight size={13} className={"text-green-400 text-shrrink-0"}/>}
+                                                        {isSentByMe ? (<CornerUpLeft size={14} className={"text-blue-400 text-shrrink-0"}/>) : (<CornerDownRight size={13} className={"text-green-400 text-shrrink-0"}/>)}
+                                                        <span className="text-sm text-gray-400 truncate flex-1">
+                                                            {
+                                                                latestMessage.text
+                                                            }
+                                                        </span>
                                                     </div>
                                                 )
                                             }
