@@ -46,9 +46,18 @@ const ChatMessages = ( { selectedUser, messages, loggedInUser }: ChatMessagesPro
                             
                             return(
                                 <div className={`flex flex-col gap-1 mt-2 ${isSentByMe? "items-end" : "items-start"}`} >
-                                    <div className={`rounded-lg p-3 max-w-sm ${isSentByMe? "bg-blue-600 text-white" : "bg-gray-700 text-white"}`} >
+                                    <div className={`rounded-lg p-3 max-w-sm ${isSentByMe? "bg-blue-600 text-white" : "bg-gray-700 text-white"}`}
+                                    >{
+                                        e.messageType === "image" && e.image && (
+                                            <div className="relative group">
+                                                <img src={e.image.url} alt="Shared Image" className="rounded-lg h-auto max-w-full" />
+                                            </div>
+                                        )
+                                    }
 
+                                    {e.text && <p className="mt-1">{e.text}</p>}
                                     </div>
+
                                 </div>
                             )// Create a unique key using message ID and index
                         })
