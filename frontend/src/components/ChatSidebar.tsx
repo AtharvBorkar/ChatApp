@@ -143,7 +143,7 @@ const ChatSidebar = ({sidebarOpen, setSidebarOpen, showAllUsers, setShowAllUsers
                 </div>
             ) : (
                 <div className="flex flex-col items-center justify-center h-full text-center">
-                    <div className="p-4 bg-gray-400 rounded-full mb-4">
+                    <div className="p-4 bg-gray-700 rounded-full mb-4">
                         <MessageCircle className="w-8 h-8 text-gray-400" />
                     </div>
                     <p className="text-gray-400 font-medium">No Conversation yet</p>
