@@ -13,9 +13,10 @@ interface ChatSidebarProps {
     selectedUser: User | null
     setSelectedUser: (userId: User | null) => void
     handleLogout: () => void
+    createChat: (user: User) => void
 }
 
-const ChatSidebar = ({sidebarOpen, setSidebarOpen, showAllUsers, setShowAllUsers, users, loggedInUser, chats, selectedUser, setSelectedUser, handleLogout}:ChatSidebarProps) => {
+const ChatSidebar = ({sidebarOpen, setSidebarOpen, showAllUsers, setShowAllUsers, users, loggedInUser, chats, selectedUser, setSelectedUser, handleLogout, createChat}:ChatSidebarProps) => {
     const [ searchQuery, setSearchQuery] = useState("")
     console.log(users)
   return (
@@ -61,7 +62,7 @@ const ChatSidebar = ({sidebarOpen, setSidebarOpen, showAllUsers, setShowAllUsers
                     <div className="space-y-2 overflow-hidden h-full pb-4">  { /*removed h-full and to avoid last chat getting hidden behind footer*/ }
                         {
                             users?.filter((u)=> u._id !== loggedInUser?._id && u.name.toLowerCase().includes(searchQuery.toLocaleLowerCase())).map((u)=>(
-                                <button key={u._id} className="w-full text-left p-4 rounded-lg border-gray-700 hover:border-gray-600 hover:bg-gray-800 transition-colors">
+                                <button key={u._id} className="w-full text-left p-4 rounded-lg border-gray-700 hover:border-gray-600 hover:bg-gray-800 transition-colors" onClick={()=> createChat(u)}>
                                     <div className="flex items-center gap-3">
                                         <div className="relative">
                                             <UserCircle className="w-6 h-6 text-gray-300" />

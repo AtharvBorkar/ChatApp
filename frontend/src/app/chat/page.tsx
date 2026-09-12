@@ -48,12 +48,20 @@ const ChatApp = () => {
   async function createChat(u: User){
     try{
       const token = Cookies.get("token")
-      const {data} = await axios.post(`${chat_service}/api/v1/chats/new`, 
+      const {data} = await axios.post(`${chat_service}/api/v1/chat/new`, 
         {
           userId: loggedInUser?._id,
           otherUserId: u._id,
+        },{
+          headers:{
+            Authorization: `Bearer ${token}`
+          }
         }
       )
+
+      setSelectedUser(data.chatId)
+      setShowAllUsers(false)
+      await fetchChats()
     }catch(error){
       toast.error("Failed to start chat")
     }
@@ -73,6 +81,7 @@ const ChatApp = () => {
       selectedUser={selectedUser}
       setSelectedUser={setSelectedUser}
       handleLogout={handleLogout}
+      createChat={createChat}
       />
       <div className="flex-1 flex flex-col justify-between p-4 backdrop-blur-xl bg-white/5 border border-white/10"></div>
     </div>
