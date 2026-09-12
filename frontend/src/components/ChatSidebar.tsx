@@ -1,6 +1,6 @@
 import { User } from '@/context/AppContext'
 import React, { useState } from 'react'
-import { X, MessageCircle, Plus, Search, UserCircle } from 'lucide-react'
+import { X, MessageCircle, Plus, Search, UserCircle, CornerUpLeft, CornerDownRight } from 'lucide-react'
 interface ChatSidebarProps {
     sidebarOpen: boolean
     setSidebarOpen: (open: boolean) => void
@@ -83,11 +83,15 @@ const ChatSidebar = ({sidebarOpen, setSidebarOpen, showAllUsers, setShowAllUsers
             :  chats && chats.length >0 ? (
                 <div className="space-y-2 overflow-y-auto h-full pb-4">
                     {
+                        
                         chats.map((chat)=>{
+                            //console.log("CHAT OBJECT:", JSON.stringify(chats, null, 2))
                             const latestMessage = chat.chat.latestMessage
                             const isSelected = selectedUser?._id === chat.chat._id
                             const isSentByMe = latestMessage?.sender === loggedInUser?._id
-                            const unseenCouunt = chat.chat.unseenCount || 0
+                            // const isOnline = chat.chat.isOnline
+                            const unseenCount = chat.chat.unseenCount || 0
+                            //const otherUser = chat.chat.users?.find((u: User) => u._id !== loggedInUser?._id)  //added by claude during fix
 
                             return <button key={chat.chat._id} onClick={() => {
                                 setSelectedUser(chat.chat._id)
@@ -98,9 +102,34 @@ const ChatSidebar = ({sidebarOpen, setSidebarOpen, showAllUsers, setShowAllUsers
                                 <div className="flex items-center gap-3">
                                     <div className="relative">
                                         <div className="w-12 h-12 rounded-full bg-gray-700 flex items-center justify-center">
-                                            <UserCircle className="w-0 h-0 text-gray-300" />
+                                            <UserCircle className="w-6 h-6 text-gray-300" />
+                                            {/* onlineuser ka work */}
                                         </div>
+
+                                        
                                     </div>
+
+                                    <div className="flex-1 min-w-0">
+                                            <div className="flex items-center justify-between mb-1">
+                                                <span className={`font-semibold truncate ${isSelected? "text-white" : "text-gray-200"}`}>
+                                                    {/*{chat.chat.name}*/} 
+                                                    {chat.user?.name}
+                                                </span>
+                                                {
+                                                    unseenCount > 0 && ( <div className="bg-red-600 text-white text-xs font-bold rounded-full min-w-5.5 h-5.5 flex items-center justify-center px-2">
+                                                        {unseenCount > 99 ? "99+" : unseenCount}
+                                                    </div>)
+                                                }
+                                            </div>
+                                            {
+                                                latestMessage && (
+                                                    <div className="flex items-center gap-2">
+                                                        {isSentByMe ? <CornerUpLeft size={14} className={"text-blue-400 text-shrrink-0"}/> : <CornerDownRight size={13} className={"text-green-400 text-shrrink-0"}/>}
+                                                    </div>
+                                                )
+                                            }
+                                    </div>
+                                    
                                 </div>
                             </button>
                         })
