@@ -14,7 +14,7 @@ interface ChatSidebarProps {
     handleLogout: () => void
 }
 
-const ChatSidebar = ({sidebarOpen, setSidebarOpen, showAllUsers, setShowAllUsers, users, loggedInUser, chats, selectedUser, handleLogout}:ChatSidebarProps) => {
+const ChatSidebar = ({sidebarOpen, setSidebarOpen, showAllUsers, setShowAllUsers, users, loggedInUser, chats, selectedUser, setSelectedUser, handleLogout}:ChatSidebarProps) => {
     const [ searchQuery, setSearchQuery] = useState("")
     console.log(users)
   return (
@@ -89,8 +89,19 @@ const ChatSidebar = ({sidebarOpen, setSidebarOpen, showAllUsers, setShowAllUsers
                             const isSentByMe = latestMessage?.sender === loggedInUser?._id
                             const unseenCouunt = chat.chat.unseenCount || 0
 
-                            return <button>
-                                
+                            return <button key={chat.chat._id} onClick={() => {
+                                setSelectedUser(chat.chat._id)
+                                setSidebarOpen(false)
+                            }}
+                            className={`w-full text-left p-4 rounded-lg transition-colors ${isSelected? "bg-blue-600 border-blue-500" : "hover:bg-gray-700 hover:border-gray-600"}`}
+                            >
+                                <div className="flex items-center gap-3">
+                                    <div className="relative">
+                                        <div className="w-12 h-12 rounded-full bg-gray-700 flex items-center justify-center">
+                                            <UserCircle className="w-0 h-0 text-gray-300" />
+                                        </div>
+                                    </div>
+                                </div>
                             </button>
                         })
                     }
