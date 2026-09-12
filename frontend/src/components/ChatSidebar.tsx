@@ -1,6 +1,6 @@
 import { User } from '@/context/AppContext'
 import React, { useState } from 'react'
-import { X, MessageCircle, Plus, Search, UserCircle, CornerUpLeft, CornerDownRight } from 'lucide-react'
+import { X, MessageCircle, Plus, Search, UserCircle, CornerUpLeft, CornerDownRight, LogOut } from 'lucide-react'
 import Link from 'next/link'
 interface ChatSidebarProps {
     sidebarOpen: boolean
@@ -160,8 +160,15 @@ const ChatSidebar = ({sidebarOpen, setSidebarOpen, showAllUsers, setShowAllUsers
                 <div className="p-1.5 bg-gray-700 rounded-lg">
                     <UserCircle className="w-4 h-4 text-gray-300"/>
                 </div>
-                <span className="text-gray-200 font-medium">Profile</span>
+                <span className="text-gray-300 font-medium">Profile</span>
             </Link>
+
+            <button onClick={handleLogout} className={"w-full flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-red-600 transition-colors text-red-500 hover:text-white"}>
+                <div className="p-1.5 bg-gray-700 rounded-lg">
+                    <LogOut className="w-4 h-4 text-gray-300"/>
+                </div>
+                <span className="text-gray-300 font-medium">Logout</span>
+            </button>
         </div>
     </aside>
   )
