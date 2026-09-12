@@ -1,6 +1,7 @@
 import { User } from '@/context/AppContext'
 import React, { useState } from 'react'
 import { X, MessageCircle, Plus, Search, UserCircle, CornerUpLeft, CornerDownRight } from 'lucide-react'
+import Link from 'next/link'
 interface ChatSidebarProps {
     sidebarOpen: boolean
     setSidebarOpen: (open: boolean) => void
@@ -46,7 +47,7 @@ const ChatSidebar = ({sidebarOpen, setSidebarOpen, showAllUsers, setShowAllUsers
         </div>
 
         {/*content*/}
-        <div className="flex-1 overflow-hdden px-4 py-2">
+        <div className="flex-1 min-h-0 px-4 py-2"> {/* removed overflow-hidden and added min-h-0 */}
             {
                 showAllUsers? <div className="space-y-4 h-full">
                     <div className="relative">
@@ -57,7 +58,7 @@ const ChatSidebar = ({sidebarOpen, setSidebarOpen, showAllUsers, setShowAllUsers
                     </div>
 
                     {/*user list*/}
-                    <div className="space-y-2 overflow-y-auto h-full pb-4">
+                    <div className="space-y-2 overflow-hidden h-full pb-4">  { /*removed h-full and to avoid last chat getting hidden behind footer*/ }
                         {
                             users?.filter((u)=> u._id !== loggedInUser?._id && u.name.toLowerCase().includes(searchQuery.toLocaleLowerCase())).map((u)=>(
                                 <button key={u._id} className="w-full text-left p-4 rounded-lg border-gray-700 hover:border-gray-600 hover:bg-gray-800 transition-colors">
@@ -81,7 +82,7 @@ const ChatSidebar = ({sidebarOpen, setSidebarOpen, showAllUsers, setShowAllUsers
                     </div>
                 </div>
             :  chats && chats.length >0 ? (
-                <div className="space-y-2 overflow-y-auto h-full pb-4">
+                <div className="space-y-2 overflow-hidden h-full pb-4">  { /*removed h-full to avoid last chat getting hidden behind footer*/ }
                     {
                         
                         chats.map((chat)=>{
@@ -151,6 +152,16 @@ const ChatSidebar = ({sidebarOpen, setSidebarOpen, showAllUsers, setShowAllUsers
 
             )
             }
+        </div>
+
+        {/*footer*/}
+        <div className="p-4 border-t border-gray-700 space-y-2">
+            <Link href={'/profile'} className="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-gray-800 transition-colors">
+                <div className="p-1.5 bg-gray-700 rounded-lg">
+                    <UserCircle className="w-4 h-4 text-gray-300"/>
+                </div>
+                <span className="text-gray-200 font-medium">Profile</span>
+            </Link>
         </div>
     </aside>
   )
