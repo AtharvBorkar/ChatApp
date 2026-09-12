@@ -66,20 +66,35 @@ const ChatSidebar = ({sidebarOpen, setSidebarOpen, showAllUsers, setShowAllUsers
                                             <UserCircle className="w-6 h-6 text-gray-300" />
                                         </div>
                                         {/* online Symboll dikhan hain*/}
-                                    </div>
-                                    <div className="flex-1 min-w-0">
-                                        <span className="font-medium text-white">{u.name}</span>
-                                        <div className="text-xs text-gray-400 mt-0.5">
-                                            {/* to show online offilne text */}
+
+                                        <div className="flex-1 min-w-0">
+                                            <span className="font-medium text-white">{u.name}</span>
+                                                <div className="text-xs text-gray-400 mt-0.5">
+                                                    {/* to show online offilne text */}
+                                                </div>
                                         </div>
                                     </div>
+                                    
                                 </button>
                             ))
                         }
                     </div>
                 </div>
             :  chats && chats.length >0 ? (
-                <div className=""></div>
+                <div className="space-y-2 overflow-y-auto h-full pb-4">
+                    {
+                        chats.map((chat)=>{
+                            const latestMessage = chat.chat.latestMessage
+                            const isSelected = selectedUser?._id === chat.chat._id
+                            const isSentByMe = latestMessage?.sender === loggedInUser?._id
+                            const unseenCouunt = chat.chat.unseenCount || 0
+
+                            return <button>
+                                
+                            </button>
+                        })
+                    }
+                </div>
             ) : (
                 <div></div>
             )
