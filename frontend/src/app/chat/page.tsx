@@ -8,6 +8,7 @@ import React, { useEffect, useState } from 'react'
 import { toast } from "react-hot-toast/headless";
 import Cookies from 'js-cookie'
 import axios from 'axios'
+import ChatHeader from "@/components/ChatHeader";
 
 export interface Message{
   _id: string
@@ -45,6 +46,23 @@ const ChatApp = () => {
 
   const handleLogout = () => logoutUser()
 
+  async function fetchChat() {
+    const token = Cookies.get("token")
+    try{
+      const {data} = await axios.get(`${chat_service}/api/v1/message/${selectedUser}`, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      })
+      setMessages(data.messages)
+      setUser(data.user)
+      await fetchChats()
+    }catch(error){
+      console.log(error)
+      toast.error("Failed to fetch chat")
+    }
+  }
+
   async function createChat(u: User){
     try{
       const token = Cookies.get("token")
@@ -66,6 +84,12 @@ const ChatApp = () => {
       toast.error("Failed to start chat")
     }
   }
+
+  useEffect(()=>{
+    if(selectedUser){
+      fetchChat()
+    }
+  },[selectedUser])
   
   if(loading) return <Loading />
   return (
@@ -83,7 +107,9 @@ const ChatApp = () => {
       handleLogout={handleLogout}
       createChat={createChat}
       />
-      <div className="flex-1 flex flex-col justify-between p-4 backdrop-blur-xl bg-white/5 border border-white/10"></div>
+      <div className="flex-1 flex flex-col justify-between p-4 backdrop-blur-xl bg-white/5 border border-white/10">
+        <ChatHeader user={user} setSidebarOpen={setSidebarOpen} isTyping={isTyping} />
+      </div>
     </div>
   )
 }
