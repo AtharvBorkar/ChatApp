@@ -35,6 +35,7 @@ const ChatApp = () => {
   //const [messages, setMessages] = useState("")
   //const [messages, setMessages] = useState<string>("")
   const [messages, setMessages] = useState<Message[]>([])
+  const [message, setMessage] = useState<string>("")
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const [user, setUser] = useState<User | null>(null)
   const [showAllUsers, setShowAllUsers] = useState(false)
@@ -88,6 +89,14 @@ const ChatApp = () => {
     }catch(error){
       toast.error("Failed to start chat")
     }
+  }
+
+  const handleTyping = (value : string) => {
+    setMessage(value)
+
+    if(!selectedUser) return
+
+    //Socket Setup
   }
 
   useEffect(()=>{
