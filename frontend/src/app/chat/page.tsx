@@ -156,7 +156,7 @@ const ChatApp = () => {
   
   if(loading) return <Loading />
   return (
-    <div className="min-h-screen flex bg-gray-900 text-white relative overflow-hidden">
+    <div className="min-h-screen flex bg-gray-900 text-white relative overflow-hidden"> {/* removed min-h-screen and addded h-screen by claude fix */}
       <ChatSidebar 
       sidebarOpen={sidebarOpen}
       setSidebarOpen={setSidebarOpen}
@@ -184,7 +184,8 @@ const ChatApp = () => {
         />
 
         <MessageInput
-        selectedUser={selectedUser}
+        //selectedUser={selectedUser}
+        selectedUser={selectedUser?._id ?? null}
         handleMessageSend={handleMessageSend}
         setMessage={handleTyping}
         message={message} />
