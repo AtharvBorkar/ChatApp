@@ -1,5 +1,5 @@
 import { User } from '@/context/AppContext'
-import { X } from 'lucide-react'
+import { Paperclip, X } from 'lucide-react'
 import React, { useState } from 'react'
 
 interface MessageInputProps {
@@ -42,6 +42,18 @@ const MessageInput = ({
 
             </div>
         }
+
+        <div className="flex items-center gap-2">
+            <label className="cursor-pointer bg-gray-700 hover:bg-gray-600 rounded-lg px-3 py-2 transition-colors">
+                <Paperclip className="size={18} text-gray-300" />
+                <input type="file" accept="image/*" className="hidden" onChange={e=>{
+                    const file = e.target.files?.[0]
+                    if(file && file.type.startsWith("image/")){
+                        setImageFile(file)
+                    }
+                }}/>
+            </label>
+        </div>
     </form>
   )
 }
