@@ -1,11 +1,14 @@
+import { User } from '@/context/AppContext'
 import { X } from 'lucide-react'
 import React, { useState } from 'react'
 
 interface MessageInputProps {
-  selectedUser: string | null
-  handleMessageSend: (e:any, imageFile?: File | null) => void
-  setMessage: (value: string) => void
+  selectedUser: User | null
   message: string
+  setMessage: (message: string) => void
+  handleMessageSend: (e:any, imageFile?: File | null) => void
+  
+  
 }
 
 const MessageInput = ({
@@ -29,7 +32,7 @@ const MessageInput = ({
 
     if(!selectedUser) return null
   return (
-    <form onSubmit={handleSubmit} className="flex flex-col gap-2 borter-t border-gray-700 pt-2">
+    <form onSubmit={handleSubmit} className="flex flex-col gap-2 border-t border-red-700 pt-2">
         {
             imageFile && <div className="relative w-fit">
                 <img src={URL.createObjectURL(imageFile)} alt="Preview" className="w-24 h-24 object-cover border border-gray-600 max-h-48 rounded-lg" />

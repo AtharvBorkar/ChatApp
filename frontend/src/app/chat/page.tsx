@@ -31,7 +31,7 @@ export interface Message{
 const ChatApp = () => {
   const {loading, isAuth, logoutUser, chats, user: loggedInUser, users, fetchChats} = useAppData()
 
-  // const [selectedUser, setSelectedUser] = useState<string | null>(null)
+  //const [selectedUser, setSelectedUser] = useState<string | null>(null)
   const [selectedUser, setSelectedUser] = useState<User | null>(null);
   //const [messages, setMessages] = useState("")
   //const [messages, setMessages] = useState<string>("")
@@ -184,8 +184,9 @@ const ChatApp = () => {
         />
 
         <MessageInput
-        //selectedUser={selectedUser}
-        selectedUser={selectedUser?._id ?? null}
+        selectedUser={selectedUser}
+        //selectedUser={selectedUser?._id ?? null}
+        //selectedUser={selectedUser?._id ?? null}
         handleMessageSend={handleMessageSend}
         setMessage={handleTyping}
         message={message} />
