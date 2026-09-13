@@ -47,7 +47,7 @@ const ChatMessages = ( { selectedUser, messages, loggedInUser }: ChatMessagesPro
                             const uniqueKey = `${e._id}-${i}`;
                             
                             return(
-                                <div className={`flex flex-col gap-1 mt-2 ${isSentByMe? "items-end" : "items-start"}`} >
+                                <div className={`flex flex-col gap-1 mt-2 ${isSentByMe? "items-end" : "items-start"}`} key={uniqueKey}>
                                     <div className={`rounded-lg p-3 max-w-sm ${isSentByMe? "bg-blue-600 text-white" : "bg-gray-700 text-white"}`}
                                     >{
                                         e.messageType === "image" && e.image && (
@@ -69,9 +69,9 @@ const ChatMessages = ( { selectedUser, messages, loggedInUser }: ChatMessagesPro
                                                         e.seen ? <div className="flex items-center gap-1 text-blue-400">
                                                             <CheckCheck className="w-3 h-3" />
                                                             {
-                                                                e.seenAt && <span>{moment(e.seenAt).format("hh:mm A")}</span>
+                                                                e.seenAt && <span>{moment(e.seenAt).format("hh:mm A . MMM D")}</span>
                                                             }
-                                                        </div> : <Check className="w-3 h-3 text-gray-300" />
+                                                        </div> : <Check className="w-6 h-3 text-gray-300" />
                                                     }
                                                 </div>
                                             }
@@ -81,6 +81,7 @@ const ChatMessages = ( { selectedUser, messages, loggedInUser }: ChatMessagesPro
                             )// Create a unique key using message ID and index
                         })
                     }
+                    <div ref={bottomRef} />
                     </>
                 )
             }

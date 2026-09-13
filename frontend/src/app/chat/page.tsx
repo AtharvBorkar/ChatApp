@@ -21,6 +21,7 @@ export interface Message{
     publicId: string
   }
   messageType: "text" | "image"
+  seen?: boolean
   seenAt?: string
   createdAt: string
 }
