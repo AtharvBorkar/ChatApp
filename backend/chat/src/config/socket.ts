@@ -13,4 +13,15 @@ const io = new Server(server, {
     }
 })
 
+const userSocketMap: Record<string, string> = {}
+
+io.on("connection", (socket: Socket) => {
+    console.log("A user connected:", socket.id)
+
+    socket.on("disconnect", () => {
+        console.log("A user disconnected:", socket.id)  
+    })
+})
+
+
 export { app, server, io }

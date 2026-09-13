@@ -9,5 +9,12 @@ const io = new Server(server, {
         methods: ["GET", "POST"]
     }
 });
+const userSocketMap = {};
+io.on("connection", (socket) => {
+    console.log("A user connected:", socket.id);
+    socket.on("disconnect", () => {
+        console.log("A user disconnected:", socket.id);
+    });
+});
 export { app, server, io };
 //# sourceMappingURL=socket.js.map
