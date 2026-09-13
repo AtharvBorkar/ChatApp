@@ -15,6 +15,9 @@ io.on("connection", (socket) => {
     socket.on("disconnect", () => {
         console.log("A user disconnected:", socket.id);
     });
+    socket.on("connect_error", (error) => {
+        console.error("Socket Connection error:", error);
+    });
 });
 export { app, server, io };
 //# sourceMappingURL=socket.js.map

@@ -21,6 +21,10 @@ io.on("connection", (socket: Socket) => {
     socket.on("disconnect", () => {
         console.log("A user disconnected:", socket.id)  
     })
+
+    socket.on("connect_error", (error) => {
+        console.error("Socket Connection error:", error)
+    })
 })
 
 
