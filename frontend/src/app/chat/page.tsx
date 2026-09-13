@@ -59,6 +59,7 @@ const ChatApp = () => {
       const {data} = await axios.get(`${chat_service}/api/v1/message/${selectedUser}`, {
         headers: {
           Authorization: `Bearer ${token}`
+          //Authorization: `Bearer ${Cookies.get("token")}`,
         }
       })
       setMessages(data.messages)
@@ -80,6 +81,7 @@ const ChatApp = () => {
         },{
           headers:{
             Authorization: `Bearer ${token}`
+            //Authorization: `Bearer ${Cookies.get("token")}`,
           }
         }
       )
