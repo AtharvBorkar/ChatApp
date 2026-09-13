@@ -118,8 +118,8 @@ const ChatApp = () => {
 
       const {data} = await axios.post(`${chat_service}/api/v1/message`, formData, {
         headers: {
-          //Authorization: `Bearer ${Cookies.get("token")}`,
-          Authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${Cookies.get("token")}`,
+          //Authorization: `Bearer ${token}`,
           "Content-Type": "multipart/form-data"
         }
       })

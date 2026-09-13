@@ -12,6 +12,7 @@ interface ChatSidebarProps {
     chats: any[] | null
     //selectedUser: User | null
     selectedUser: string | null
+    //setSelectedUser: (id: string | null) => void
     setSelectedUser: (userId: string | null) => void
     //setSelectedUser: (userId: User | null) => void
     handleLogout: () => void
