@@ -1,6 +1,6 @@
 "use client"
 
-import { createContext, ReactNode, useEffect, useState } from "react";
+import { createContext, ReactNode, useContext, useEffect, useState } from "react";
 import { io, Socket } from "socket.io-client";
 import { useAppData, chat_service } from "./AppContext";
 
@@ -31,4 +31,10 @@ export const SocketProvider = ({children}: ProviderProps) => {
             newSocket.disconnect();
         }
     }, [user?._id])
+
+    return <SocketContext.Provider value={{ socket }}>
+        {children}
+    </SocketContext.Provider>
 }
+
+export const SocketData = () => useContext(SocketContext)
