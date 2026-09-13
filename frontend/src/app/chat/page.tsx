@@ -175,6 +175,7 @@ const ChatApp = () => {
       setSelectedUser={setSelectedUser}
       handleLogout={handleLogout}
       createChat={createChat}
+      onlineUsers={onlineUsers} // Pass online users to ChatSidebar
       />
       <div className="flex-1 flex flex-col justify-between p-4 backdrop-blur-xl bg-white/5 border border-white/10">
         <ChatHeader
