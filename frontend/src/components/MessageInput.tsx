@@ -1,5 +1,5 @@
 import { User } from '@/context/AppContext'
-import { Paperclip, X } from 'lucide-react'
+import { Loader2, Paperclip, Send, X } from 'lucide-react'
 import React, { useState } from 'react'
 
 interface MessageInputProps {
@@ -18,7 +18,7 @@ const MessageInput = ({
     message
 }: MessageInputProps) => {
     const [imageFile, setImageFile] = useState<File | null>(null)
-    const [isUploaidng, setIsUploading] = useState(false)
+    const [isUploading, setIsUploading] = useState(false)
     
     const handleSubmit = async(e:any) => {
         e.preventDefault()
@@ -53,6 +53,23 @@ const MessageInput = ({
                     }
                 }}/>
             </label>
+            
+            <input
+            type="text"
+            className="flex-1 bg-gray-700 rounded-lg px-4 py-2 text-white placeholder-gray-400"
+            placeholder={imageFile ? "Add a caption..." : "Type a Message..."}
+            value={message} 
+            onChange={(e) => setMessage(e.target.value)}
+            />
+
+            <button type="submit" disabled={(!imageFile && !message) || isUploading}
+            className="bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-lg transition-colours flex items-center gap-1 disabled:opacity-50 disabled:cursor-not-allowed text-white" >
+                {
+                    isUploading ? <Loader2 className="w-4 h-4 animate-spin" /> 
+                    :
+                    <Send className="w-4 h-4" />
+                }
+            </button>
         </div>
     </form>
   )
