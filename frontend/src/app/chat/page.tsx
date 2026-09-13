@@ -121,8 +121,22 @@ const ChatApp = () => {
           "Content-Type": "multipart/form-data"
         }
       })
-    }catch(error){
 
+    setMessages((prev)=>{
+      const currentMessages = prev || []
+      const mesageExists = currentMessages.some(
+        (msg) => msg._id === data.message._id
+      )
+      if(!mesageExists){
+        return [...currentMessages, data.message]
+      }
+      return currentMessages
+    })
+    setMessage("")
+
+    const displayText = imageFile ? "📷 image" : message
+    }catch(error:any){
+      toast.error(error.response.data.message)
     }
   }
 
@@ -169,7 +183,11 @@ const ChatApp = () => {
         loggedInUser={loggedInUser}
         />
 
-        <MessageInput />
+        <MessageInput
+        selectedUser={selectedUser}
+        handleMessageSend={handleMessageSend}
+        setMessage={handleTyping}
+        message={message} />
       </div>
     </div>
   )
