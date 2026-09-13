@@ -3,8 +3,9 @@ import { Loader2, Paperclip, Send, X } from 'lucide-react'
 import React, { useState } from 'react'
 
 interface MessageInputProps {
-  selectedUser: User | null
-  message: string
+    selectedUser: string | null
+    //selectedUser: User | null
+    message: string
   setMessage: (message: string) => void
   handleMessageSend: (e:any, imageFile?: File | null) => void
   

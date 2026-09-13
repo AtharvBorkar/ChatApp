@@ -10,8 +10,10 @@ interface ChatSidebarProps {
     users: User[] | null
     loggedInUser: User | null
     chats: any[] | null
-    selectedUser: User | null
-    setSelectedUser: (userId: User | null) => void
+    //selectedUser: User | null
+    selectedUser: string | null
+    setSelectedUser: (userId: string | null) => void
+    //setSelectedUser: (userId: User | null) => void
     handleLogout: () => void
     createChat: (user: User) => void
 }
@@ -89,7 +91,7 @@ const ChatSidebar = ({sidebarOpen, setSidebarOpen, showAllUsers, setShowAllUsers
                         chats.map((chat)=>{
                             //console.log("CHAT OBJECT:", JSON.stringify(chats, null, 2))
                             const latestMessage = chat.chat.latestMessage
-                            const isSelected = selectedUser?._id === chat.chat._id
+                            const isSelected = selectedUser === chat.chat._id
                             const isSentByMe = latestMessage?.sender === loggedInUser?._id
                             // const isOnline = chat.chat.isOnline
                             const unseenCount = chat.chat.unseenCount || 0

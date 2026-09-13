@@ -31,8 +31,8 @@ export interface Message{
 const ChatApp = () => {
   const {loading, isAuth, logoutUser, chats, user: loggedInUser, users, fetchChats} = useAppData()
 
-  //const [selectedUser, setSelectedUser] = useState<string | null>(null)
-  const [selectedUser, setSelectedUser] = useState<User | null>(null);
+  const [selectedUser, setSelectedUser] = useState<string | null>(null)
+  //const [selectedUser, setSelectedUser] = useState<User | null>(null);
   //const [messages, setMessages] = useState("")
   //const [messages, setMessages] = useState<string>("")
   const [messages, setMessages] = useState<Message[]>([])
@@ -106,7 +106,7 @@ const ChatApp = () => {
     try{
       const formData = new FormData()
 
-      formData.append("chatId", selectedUser?._id || "")
+      formData.append("chatId", selectedUser || "")
 
       if(message.trim()){
         formData.append("text", message)

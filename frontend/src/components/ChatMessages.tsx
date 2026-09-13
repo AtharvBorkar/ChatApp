@@ -6,7 +6,7 @@ import { Check, CheckCheck } from 'lucide-react';
 
 
 interface ChatMessagesProps {
-    selectedUser: User | null;  //{ was string }
+    selectedUser: string | null;  //{ was string }
     messages: Message[] | null;
     loggedInUser: User | null;
 }
