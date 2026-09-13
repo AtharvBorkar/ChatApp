@@ -11,6 +11,7 @@ import axios from 'axios'
 import ChatHeader from "@/components/ChatHeader";
 import ChatMessages from "@/components/ChatMessages";
 import MessageInput from "@/components/MessageInput";
+import token from 'js-cookie'
 
 export interface Message{
   _id: string
@@ -88,6 +89,40 @@ const ChatApp = () => {
       await fetchChats()
     }catch(error){
       toast.error("Failed to start chat")
+    }
+  }
+
+  const handleMessageSend = async (e:any, imageFile?: File | null) => {
+    e.preventDefault()
+
+    if(!message.trim() && !imageFile) return
+
+    if(!selectedUser) return
+
+    //Scoket Work
+
+    try{
+      const formData = new FormData()
+
+      formData.append("chatId", selectedUser?._id || "")
+
+      if(message.trim()){
+        formData.append("text", message)
+      }
+
+      if(imageFile){
+        formData.append("image", imageFile)
+      }
+
+      const {data} = await axios.post(`${chat_service}/api/v1/message`, formData, {
+        headers: {
+          //authorization: `Bearer ${Cookies.get("token")}`,
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "multipart/form-data"
+        }
+      })
+    }catch(error){
+
     }
   }
 
