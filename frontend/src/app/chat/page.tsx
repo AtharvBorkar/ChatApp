@@ -10,6 +10,7 @@ import Cookies from 'js-cookie'
 import axios from 'axios'
 import ChatHeader from "@/components/ChatHeader";
 import ChatMessages from "@/components/ChatMessages";
+import MessageInput from "@/components/MessageInput";
 
 export interface Message{
   _id: string
@@ -112,8 +113,19 @@ const ChatApp = () => {
       createChat={createChat}
       />
       <div className="flex-1 flex flex-col justify-between p-4 backdrop-blur-xl bg-white/5 border border-white/10">
-        <ChatHeader user={user} setSidebarOpen={setSidebarOpen} isTyping={isTyping} />
-        <ChatMessages selectedUser={selectedUser} messages={messages} loggedInUser={loggedInUser} />
+        <ChatHeader
+        user={user}
+        setSidebarOpen={setSidebarOpen}
+        isTyping={isTyping}
+        />
+
+        <ChatMessages
+        selectedUser={selectedUser}
+        messages={messages}
+        loggedInUser={loggedInUser}
+        />
+
+        <MessageInput />
       </div>
     </div>
   )
