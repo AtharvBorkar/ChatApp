@@ -12,6 +12,7 @@ import ChatHeader from "@/components/ChatHeader";
 import ChatMessages from "@/components/ChatMessages";
 import MessageInput from "@/components/MessageInput";
 import token from 'js-cookie'
+import { SocketData } from '@/context/SocketContext';
 
 export interface Message{
   _id: string
@@ -30,6 +31,9 @@ export interface Message{
 
 const ChatApp = () => {
   const {loading, isAuth, logoutUser, chats, user: loggedInUser, users, fetchChats} = useAppData()
+
+  const {onlineUsers} = SocketData() // Use the SocketData hook to get online users
+  console.log("Online Users:", onlineUsers) // Log the online users to verify
 
   const [selectedUser, setSelectedUser] = useState<string | null>(null)
   //const [selectedUser, setSelectedUser] = useState<User | null>(null);

@@ -21,7 +21,7 @@ interface ChatSidebarProps {
 
 const ChatSidebar = ({sidebarOpen, setSidebarOpen, showAllUsers, setShowAllUsers, users, loggedInUser, chats, selectedUser, setSelectedUser, handleLogout, createChat}:ChatSidebarProps) => {
     const [ searchQuery, setSearchQuery] = useState("")
-    console.log(users)
+    //console.log(users)
   return (
     <aside className={`fixed z-20 sm:static top-0 left-0 h-screen w-80 bg-gray-900 border-r boredr-gray-700 transform ${sidebarOpen ? "translate-x-0" : "-translate-x-full"} sm:translate-x-0 transition-transform duration-300 flex flex-col`}>
         {/*header*/}

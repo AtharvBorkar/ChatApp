@@ -20,6 +20,11 @@ io.on("connection", (socket) => {
     io.emit("getOnlineUsers", Object.keys(userSocketMap));
     socket.on("disconnect", () => {
         console.log("A user disconnected:", socket.id);
+        if (userId) {
+            delete userSocketMap[userId];
+            console.log(`User ${userId} disconnected and removed from map`);
+            io.emit("getOnlineUsers", Object.keys(userSocketMap));
+        }
     });
     socket.on("connect_error", (error) => {
         console.error("Socket Connection error:", error);
