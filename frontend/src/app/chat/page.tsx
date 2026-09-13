@@ -182,6 +182,7 @@ const ChatApp = () => {
         user={user}
         setSidebarOpen={setSidebarOpen}
         isTyping={isTyping}
+        onlineUsers={onlineUsers} // Pass online users to ChatHeader
         />
 
         <ChatMessages
