@@ -2,7 +2,7 @@
 
 import { createContext, ReactNode, useEffect, useState } from "react";
 import { io, Socket } from "socket.io-client";
-import { useAppData } from "./AppContext";
+import { useAppData, chat_service } from "./AppContext";
 
 interface SocketContextType {
     socket: Socket | null;
@@ -24,7 +24,11 @@ export const SocketProvider = ({children}: ProviderProps) => {
         if(!user?._id) return;
 
         // Initialize the socket connection
-        const newSocket = io();
+        const newSocket = io(chat_service);
         setSocket(newSocket);
-    }, [user])
+
+        return () => {
+            newSocket.disconnect();
+        }
+    }, [user?._id])
 }
