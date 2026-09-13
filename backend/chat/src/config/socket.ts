@@ -18,6 +18,15 @@ const userSocketMap: Record<string, string> = {}
 io.on("connection", (socket: Socket) => {
     console.log("A user connected:", socket.id)
 
+    const userId = socket.handshake.query.userId as string | undefined
+
+    if(userId && userId!== "undefined"){
+        userSocketMap[userId] = socket.id
+        console.log(`User ${userId} mapped to socket ${socket.id}`)
+    }
+
+    io.emit("getOnlineUsers", Object.keys(userSocketMap))
+
     socket.on("disconnect", () => {
         console.log("A user disconnected:", socket.id)  
     })
