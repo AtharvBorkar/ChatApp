@@ -1,6 +1,13 @@
+import { Server } from 'socket.io';
 import http from "http";
 import express from "express";
 const app = express();
 const server = http.createServer(app);
-export { app, server };
+const io = new Server(server, {
+    cors: {
+        origin: "*",
+        methods: ["GET", "POST"]
+    }
+});
+export { app, server, io };
 //# sourceMappingURL=socket.js.map
