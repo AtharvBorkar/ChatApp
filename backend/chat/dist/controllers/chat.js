@@ -3,6 +3,7 @@ import TryCatch from "../config/TryCatch.js";
 // import { Chat } from "../models/Chat.js";
 import { Chat } from "../models/chat.js";
 import { Messages } from "../models/Messages.js";
+import { getReciverSocketId } from "../config/socket.js";
 export const creatNewChat = TryCatch(async (req, res) => {
     const userId = req.user?._id;
     const { otherUserId } = req.body;
@@ -117,6 +118,7 @@ export const sendMessage = TryCatch(async (req, res) => {
         return;
     }
     //socket setup
+    const receiverSocketId = getReciverSocketId(otherUserId.toString());
     let messageData = {
         chatId: chatId,
         sender: senderId,
