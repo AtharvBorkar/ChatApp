@@ -189,7 +189,7 @@ const ChatApp = () => {
         setIsTyping(true)
       }
     })
-    socket?.on("userStopTyping", (data)=>{
+    socket?.on("userStopedTyping", (data)=>{
       console.log("receved user stop typing", data)
       if(data.chatId === selectedUser && data.userId !== loggedInUser?._id){
         setIsTyping(false)
@@ -198,7 +198,7 @@ const ChatApp = () => {
 
     return () => {
       socket?.off("userTyping")
-      socket?.off("userStopTyping")
+      socket?.off("userStopedTyping")
     }
   },[socket, selectedUser, loggedInUser?._id])
 
