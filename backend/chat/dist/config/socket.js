@@ -23,7 +23,25 @@ io.on("connection", (socket) => {
     }
     socket.on("typing", (data) => {
         console.log(`User ${userId} is typing in chat ${data.chatId}`);
-        socket.to(data.chatId).emit("typing", { userId, chatId: data.chatId });
+        socket.to(data.chatId).emit("userTyping", {
+            userId: data.userId,
+            chatId: data.chatId
+        });
+    });
+    socket.on("stopTyping", (data) => {
+        console.log(`User ${data.userId} stopped typing in chat ${data.chatId}`);
+        socket.to(data.chatId).emit("userStopedTyping", {
+            userId: data.userId,
+            chatId: data.chatId
+        });
+    });
+    socket.on("joinChat", (chatId) => {
+        socket.join(chatId);
+        console.log(`User ${userId} joined chat room ${chatId}`);
+    });
+    socket.on("leaveChat", (chatId) => {
+        socket.leave(chatId);
+        console.log(`User ${userId} left chat room ${chatId}`);
     });
     socket.on("disconnect", () => {
         console.log("A user disconnected:", socket.id);
