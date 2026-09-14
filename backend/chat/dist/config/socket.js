@@ -18,6 +18,13 @@ io.on("connection", (socket) => {
         console.log(`User ${userId} mapped to socket ${socket.id}`);
     }
     io.emit("getOnlineUsers", Object.keys(userSocketMap));
+    if (userId) {
+        socket.join(userId);
+    }
+    socket.on("typing", (data) => {
+        console.log(`User ${userId} is typing in chat ${data.chatId}`);
+        socket.to(data.chatId).emit("typing", { userId, chatId: data.chatId });
+    });
     socket.on("disconnect", () => {
         console.log("A user disconnected:", socket.id);
         if (userId) {

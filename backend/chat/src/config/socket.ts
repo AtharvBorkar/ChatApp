@@ -27,6 +27,15 @@ io.on("connection", (socket: Socket) => {
 
     io.emit("getOnlineUsers", Object.keys(userSocketMap))
 
+    if(userId){
+        socket.join(userId)
+    }
+
+    socket.on("typing", (data) => {
+        console.log(`User ${userId} is typing in chat ${data.chatId}`)
+        socket.to(data.chatId).emit("typing", { userId, chatId: data.chatId })  
+    })
+
     socket.on("disconnect", () => {
         console.log("A user disconnected:", socket.id)
 
