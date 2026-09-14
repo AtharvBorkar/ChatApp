@@ -215,6 +215,14 @@ const ChatApp = () => {
       }
     }
   },[selectedUser, socket])
+
+  useEffect(()=>{
+    return () => {
+      if(typingTimeout){
+        clearTimeout(typingTimeout)
+      }
+    }
+  },[typingTimeout])
   
   if(loading) return <Loading />
   return (
