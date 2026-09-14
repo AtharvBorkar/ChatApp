@@ -39,7 +39,8 @@ const ChatApp = () => {
   //const [selectedUser, setSelectedUser] = useState<User | null>(null);
   //const [messages, setMessages] = useState("")
   //const [messages, setMessages] = useState<string>("")
-  const [messages, setMessages] = useState<Message[]>([])
+  //const [messages, setMessages] = useState<Message[]>([])
+  const [messages, setMessages] = useState<Message[] | null>(null);
   const [message, setMessage] = useState<string>("")
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const [user, setUser] = useState<User | null>(null)
@@ -177,14 +178,43 @@ const ChatApp = () => {
         chatId: selectedUser,
         userId: loggedInUser?._id
       })
-    })
+    }, 2000)
+    setTypingTimeout(timeout)
   }
+
+  useEffect(()=>{
+    socket?.on("userTyping", (data)=>{
+      console.log("receved user typing", data)
+      if(data.chatId === selectedUser && data.userId !== loggedInUser?._id){
+        setIsTyping(true)
+      }
+    })
+    socket?.on("userStopTyping", (data)=>{
+      console.log("receved user stop typing", data)
+      if(data.chatId === selectedUser && data.userId !== loggedInUser?._id){
+        setIsTyping(false)
+      }
+    })
+
+    return () => {
+      socket?.off("userTyping")
+      socket?.off("userStopTyping")
+    }
+  },[socket, selectedUser, loggedInUser?._id])
 
   useEffect(()=>{
     if(selectedUser){
       fetchChat()
+      setIsTyping(false)
+
+      socket?.emit("joinChat", selectedUser)
+
+      return () => {
+        socket?.emit("leaveChat", selectedUser)
+        setMessages(null)
+      }
     }
-  },[selectedUser])
+  },[selectedUser, socket])
   
   if(loading) return <Loading />
   return (
