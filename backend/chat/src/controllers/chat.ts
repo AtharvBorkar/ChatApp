@@ -4,6 +4,7 @@ import { AuthenticatedRequest } from "../middlewares/isAuth.js";
 // import { Chat } from "../models/Chat.js";
 import { Chat } from "../models/chat.js";
 import { Messages } from "../models/Messages.js";
+import { getReciverSocketId } from "../config/socket.js";
 
 export const creatNewChat = TryCatch(async(req: AuthenticatedRequest, res) => {
     const userId = req.user?._id
@@ -141,6 +142,8 @@ export const sendMessage = TryCatch(async(req: AuthenticatedRequest, res) => {
     }
 
     //socket setup
+    const receiverSocketId = getReciverSocketId(otherUserId.toString())
+
     let messageData: any = {
         chatId: chatId,
         sender: senderId,
