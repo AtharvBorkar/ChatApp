@@ -32,8 +32,8 @@ export interface Message{
 const ChatApp = () => {
   const {loading, isAuth, logoutUser, chats, user: loggedInUser, users, fetchChats} = useAppData()
 
-  const {onlineUsers} = SocketData() // Use the SocketData hook to get online users
-  console.log("Online Users:", onlineUsers) // Log the online users to verify
+  const {onlineUsers, socket} = SocketData() // Use the SocketData hook to get online users
+  //console.log("Online Users:", onlineUsers) // Log the online users to verify
 
   const [selectedUser, setSelectedUser] = useState<string | null>(null)
   //const [selectedUser, setSelectedUser] = useState<User | null>(null);
@@ -106,6 +106,15 @@ const ChatApp = () => {
     if(!selectedUser) return
 
     //Scoket Work
+    if(typingTimeout){
+      clearTimeout(typingTimeout)
+      setTypingTimeout(null)
+    }
+
+    socket?.emit("stopTyping", {
+      chatId: selectedUser,
+      userId: loggedInUser?._id
+    })
 
     try{
       const formData = new FormData()
@@ -149,9 +158,26 @@ const ChatApp = () => {
   const handleTyping = (value : string) => {
     setMessage(value)
 
-    if(!selectedUser) return
+    if(!selectedUser || !socket) return
 
     //Socket Setup
+    if(value.trim()){
+      socket.emit("typing", {
+        chatId: selectedUser,
+        userId: loggedInUser?._id
+      })
+    }
+
+    if(typingTimeout){
+      clearTimeout(typingTimeout)
+    }
+
+    const timeout = setTimeout(() => {
+      socket.emit("stopTyping", {
+        chatId: selectedUser,
+        userId: loggedInUser?._id
+      })
+    })
   }
 
   useEffect(()=>{
