@@ -193,7 +193,7 @@ export const sendMessage = TryCatch(async(req: AuthenticatedRequest, res) => {
 
     if(isReceiverInChatRoom && senderSocketId){
         // Do something, e.g., emit a different event or perform additional actions
-        io.to(senderSocketId).emit("messageSeen", {
+        io.to(senderSocketId).emit("messagesSeen", {
             chatId: chatId,
             seenBy: otherUserId,
             messageId: [savedMessage._id],
@@ -275,6 +275,17 @@ export const getMessagesByChat = TryCatch(
             }
 
             //socket Work
+            if(messagesToMarkSeen.length > 0){
+                const otherUserSocketId = getReciverSocketId(otherUserId.toString())
+                if(otherUserSocketId){
+                    io.to(otherUserSocketId).emit("messagesSeen", {
+                        chatId: chatId,
+                        seenBy: userId,
+                        messageId: messagesToMarkSeen.map((msg) => msg._id),
+                    })
+                }
+            }
+            
 
             res.json({
                 messages,

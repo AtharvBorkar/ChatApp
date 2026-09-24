@@ -153,6 +153,19 @@ export const sendMessage = TryCatch(async (req, res) => {
         io.to(receiverSocketId).emit("newMessage", savedMessage);
     }
     const senderSocketId = getReciverSocketId(senderId.toString());
+    if (senderSocketId) {
+        io.to(senderSocketId).emit("newMessage", savedMessage);
+    }
+    const isReceiverInChatRoom = receiverSocketId !== undefined;
+    //Defined function for below line to avoid code duplication
+    if (isReceiverInChatRoom && senderSocketId) {
+        // Do something, e.g., emit a different event or perform additional actions
+        io.to(senderSocketId).emit("messagesSeen", {
+            chatId: chatId,
+            seenBy: otherUserId,
+            messageId: [savedMessage._id],
+        });
+    }
     res.status(201).json({
         message: savedMessage,
         sender: senderId,
@@ -211,6 +224,16 @@ export const getMessagesByChat = TryCatch(async (req, res) => {
             return;
         }
         //socket Work
+        if (messagesToMarkSeen.length > 0) {
+            const otherUserSocketId = getReciverSocketId(otherUserId.toString());
+            if (otherUserSocketId) {
+                io.to(otherUserSocketId).emit("messagesSeen", {
+                    chatId: chatId,
+                    seenBy: userId,
+                    messageId: messagesToMarkSeen.map((msg) => msg._id),
+                });
+            }
+        }
         res.json({
             messages,
             user: data,
