@@ -149,9 +149,10 @@ export const sendMessage = TryCatch(async (req, res) => {
     }, { new: true });
     //emit socket
     io.to(chatId).emit("newMessage", savedMessage);
-    if (reveiverSocketId) {
-        io.to(receiverSocketId).emit;
+    if (receiverSocketId) {
+        io.to(receiverSocketId).emit("newMessage", savedMessage);
     }
+    const senderSocketId = getReciverSocketId(senderId.toString());
     res.status(201).json({
         message: savedMessage,
         sender: senderId,
