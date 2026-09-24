@@ -3,7 +3,7 @@ import TryCatch from "../config/TryCatch.js";
 // import { Chat } from "../models/Chat.js";
 import { Chat } from "../models/chat.js";
 import { Messages } from "../models/Messages.js";
-import { getReciverSocketId } from "../config/socket.js";
+import { getReciverSocketId, io } from "../config/socket.js";
 export const creatNewChat = TryCatch(async (req, res) => {
     const userId = req.user?._id;
     const { otherUserId } = req.body;
@@ -148,6 +148,10 @@ export const sendMessage = TryCatch(async (req, res) => {
         updatedAt: new Date()
     }, { new: true });
     //emit socket
+    io.to(chatId).emit("newMessage", savedMessage);
+    if (reveiverSocketId) {
+        io.to(receiverSocketId).emit;
+    }
     res.status(201).json({
         message: savedMessage,
         sender: senderId,
