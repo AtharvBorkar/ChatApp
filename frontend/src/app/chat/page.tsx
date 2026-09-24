@@ -2,7 +2,7 @@
 // import ChatSidebar from '@/components/ChatSidebar'
 import ChatSidebar from "../../components/ChatSidebar";
 import Loading from '@/components/Loading'
-import { chat_service, useAppData, User } from '@/context/AppContext'
+import { Chat, chat_service, useAppData, User } from '@/context/AppContext'
 import { useRouter } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
 import { toast } from "react-hot-toast/headless";
@@ -75,6 +75,34 @@ const ChatApp = () => {
       toast.error("Failed to fetch chat")
     }
   }
+
+  // const moveChatToTop = (chatId: string, newMessage: any, updatedUnseenCount: true) => {
+  //   setChats((prev)=>{
+  //     if(!prev) return null
+
+  //     const updatedChats = [...prev]
+  //     const chatIndex = updatedChats.findIndex(
+  //       (chat)=> chat._id === chatId
+  //     )
+  //   })
+  // }
+
+  //added by claude during a fix
+
+  const moveChatToTop = (
+     setChats: React.Dispatch<React.SetStateAction<Chat[]>>,
+     chatId: string,
+     newMessage: any,
+     updatedUnseenCount: true
+   ) => {
+     setChats((prev) => {
+  if (!prev) return prev;   // was: return null
+  const updatedChats = [...prev];
+  const chatIndex = updatedChats.findIndex((chat) => chat._id === chatId);
+  // ...
+  return updatedChats;
+});
+   };
 
   async function createChat(u: User){
     try{
