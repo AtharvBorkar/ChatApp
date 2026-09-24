@@ -100,9 +100,32 @@ const ChatApp = () => {
   const updatedChats = [...prev];
   const chatIndex = updatedChats.findIndex((chat) => chat._id === chatId);
   // ...
+
+  if (chatIndex !== -1) {
+    const [moveChat] = updatedChats.splice(chatIndex, 1);
+    // Update the last message and unseen count
+
+    // const updatedChat = {
+    //   ...moveChat,
+    //   chat: {
+    //     ...moveChat.chat,
+    //     lastMessage:{
+    //       text: newMessage.text,
+    //       sender: newMessage.sender,
+    //     }
+    //   }
+    // }
+    const updatedChat = {
+        ...moveChat,
+      latestMessage: {
+      text: newMessage.text,
+      sender: newMessage.sender, // or whatever field holds the sender id
+      },
+    };
+  }
   return updatedChats;
-});
-   };
+  });
+  };
 
   async function createChat(u: User){
     try{
