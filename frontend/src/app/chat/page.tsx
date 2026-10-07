@@ -121,9 +121,13 @@ const ChatApp = () => {
       text: newMessage.text,
       sender: newMessage.sender, // or whatever field holds the sender id
       },
+      updatedAt : new Date().toString(),
+      unseenCount: updatedUnseenCount && newMessage.sender !== loggedInUser?._id
+      ? (moveChat.unseenCount || 0) +1
+      : moveChat.unseenCount ||0,
     };
   }
-  return updatedChats;
+  updatedChats.unshift(updatedChat);
   });
   };
 
